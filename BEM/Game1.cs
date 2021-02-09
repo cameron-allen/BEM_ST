@@ -16,21 +16,27 @@ namespace BEM
             IsMouseVisible = true;
         }
 
-        protected override void Initialize()
+        protected override void Initialize()  //initialize settings ex: resolution
         {
             // TODO: Add your initialization logic here
 
             base.Initialize();
         }
 
-        protected override void LoadContent()
+        protected override void LoadContent() 
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.content = this.Content;
+            Globals._spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void UnloadContent() 
+        {
+            base.UnloadContent();
+        }
+
+        protected override void Update(GameTime gameTime) //update all game logic
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -46,7 +52,13 @@ namespace BEM
 
             // TODO: Add your drawing code here
 
+            Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            Globals._spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }
+
+
 }
