@@ -13,9 +13,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BEM
 {
-    class Globals
+    public class Globals
     {
         public static ContentManager content;
         public static SpriteBatch _spriteBatch;
+
+        public static c_Keyboard keyboard;
     }
 }
