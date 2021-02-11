@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BEM.Source.GamePlay.World;
 using Microsoft.Xna.Framework;
 
 namespace BEM.Source.Engine
 {
     public class World
     {
-        Basic2d mainChar;
+        MainChar m_char;
 
         public World()
         {                        //file location, screen loc, dims
-            mainChar = new Basic2d("2d\\images", new Vector2(300, 300), new Vector2(48, 48));
+            m_char = new MainChar("2d\\nerd", new Vector2(300, 300), new Vector2(128, 128));
         }
 
         public virtual void Update()
         {
-            mainChar.Update();
+            m_char.Update();
         }
 
         public virtual void Draw()
         {
-            mainChar.Draw();
+            m_char.Draw();
         }
     }
 }

@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BEM
 {
-    class Basic2d
+    public class Basic2d
     {
-        private Vector2 pos, dims;
+        public Vector2 pos, dims;
 
-        private SpriteEffects spriteEff;
+        public SpriteEffects spriteEff;
 
-        private Texture2D myModel;
+        public Texture2D myModel;
         public Basic2d(string PATH, Vector2 POS, Vector2 DIMS)
         {
             pos = POS;
@@ -21,6 +21,12 @@ namespace BEM
             spriteEff = new SpriteEffects();
 
             myModel = Globals.content.Load<Texture2D>(PATH);
+        }
+
+        public void ChangePath(string path)
+        {
+            myModel = Globals.content.Load<Texture2D>(path);
+            //myModel.Reload();
         }
 
         public virtual void Update()

@@ -12,9 +12,21 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Content\2d\images.xnb" />
+    <None Remove="Content\2d\nerd.xnb" />
+    <None Remove="Content\2d\nerd_flip.xnb" />
+    <None Remove="Content\obj\Windows\Content\nerd.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\2d\images.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\2d\nerd.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\2d\nerd_flip.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\obj\Windows\Content\nerd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

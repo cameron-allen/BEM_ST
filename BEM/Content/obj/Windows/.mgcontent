@@ -5,8 +5,12 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/obj/Windows/Content/images.jpg</File>
+    <File>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/obj/Windows/Content/nerd.png</File>
+    <File>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/obj/Windows/Content/nerd_flip.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -19,7 +20,10 @@ namespace BEM
         public int state;
         public string key, print, display;
 
-        
+        public object Control { get; private set; }
+
+        //public object Control { get; private set; }
+
         public c_Key(string KEY, int STATE)
         {
             key = KEY;
@@ -47,6 +51,10 @@ namespace BEM
             if(KEY == "Space")
             {
                 tempStr = " ";
+            }
+            if (KEY == "Shift")
+            {
+
             }
             if(KEY == "OemCloseBrackets")
             {
