@@ -16,45 +16,54 @@ namespace BEM.Source.GamePlay.World
         {
         }
 
-        public override void Update()
+        private void updMove()
         {
-            if (Globals.keyboard.GetPress("Space"))
+            if (Globals.keyState.IsKeyDown(Keys.LeftShift))
             {
-                sprint = (float) 2.5;
-            }else
+               
+                sprint = (float)2.5;
+            }
+            else
             {
                 sprint = 1;
             }
 
-
-            if (Globals.keyboard.GetPress("A"))
+            if (Globals.keyState.IsKeyDown(Keys.A))
             {
-                if (instance != 1)
+                if (instance == 0)
                 {
-                    ChangePath("2D\\nerd_flip");
-                    instance = 0;
+
+                    ChangePath("2d\\nerd_flip");
+                    instance = 1;
                 }
+
                 pos = new Vector2(pos.X - 2 * sprint, pos.Y);
             }
-            if (Globals.keyboard.GetPress("S"))
+            if (Globals.keyState.IsKeyDown(Keys.S))
             {
                 pos = new Vector2(pos.X, pos.Y + 2 * sprint);
             }
-            if (Globals.keyboard.GetPress("D"))
+            if (Globals.keyState.IsKeyDown(Keys.D))
             {
-                if (instance != 0)
+                if (instance == 1)
                 {
                     ChangePath("2d\\nerd");
-                    instance = 1;
+                    instance = 0;
                 }
 
                 pos = new Vector2(pos.X + 2 * sprint, pos.Y);
             }
-            if (Globals.keyboard.GetPress("W"))
+            if (Globals.keyState.IsKeyDown(Keys.W))
             {
                 pos = new Vector2(pos.X, pos.Y - 2 * sprint);
             }
 
+        }
+
+        public override void Update()
+        {
+
+            updMove();
             base.Update();
         }
 

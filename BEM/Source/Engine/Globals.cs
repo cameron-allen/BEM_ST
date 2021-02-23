@@ -17,7 +17,8 @@ namespace BEM
     {
         public static ContentManager content;
         public static SpriteBatch _spriteBatch;
+        public static KeyboardState keyState;
 
-        public static c_Keyboard keyboard;
+        public static GameTime time;
     }
 }

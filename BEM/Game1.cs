@@ -8,12 +8,14 @@ namespace BEM
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private World world;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = 640;
+            _graphics.PreferredBackBufferHeight = 360;
+            _graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -29,7 +31,6 @@ namespace BEM
         {
             Globals.content = this.Content;
             Globals._spriteBatch = new SpriteBatch(GraphicsDevice);
-            Globals.keyboard = new c_Keyboard();
 
             // TODO: use this.Content to load your game content here
             world = new World();
@@ -46,11 +47,9 @@ namespace BEM
                 Exit();
 
             // TODO: Add your update logic here
-            Globals.keyboard.Update();
+            Globals.keyState = Keyboard.GetState();
 
             world.Update();
-
-            Globals.keyboard.UpdateOld();
 
             base.Update(gameTime);
         }
