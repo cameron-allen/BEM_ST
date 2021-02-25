@@ -4,16 +4,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BEM
+namespace BEM //write more comments ya foolh
 {
     public class Basic2d
     {
         public Vector2 pos, dims;
 
-        public SpriteEffects spriteEff;
+        public SpriteEffects spriteEff;     //later on I can import sprite effects with this
 
-        public Texture2D myModel;
-        public Basic2d(string PATH, Vector2 POS, Vector2 DIMS)
+        public Texture2D myModel;       //allows me to import a sprite
+        public Basic2d(string PATH, Vector2 POS, Vector2 DIMS)      //initializations
         {
             pos = POS;
             dims = DIMS;

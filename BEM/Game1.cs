@@ -13,11 +13,11 @@ namespace BEM
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = 640;
+            _graphics.PreferredBackBufferWidth = 640;       //sets screen to 640 by 360 pixels
             _graphics.PreferredBackBufferHeight = 360;
             _graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()  //initialize settings ex: resolution
@@ -43,8 +43,13 @@ namespace BEM
 
         protected override void Update(GameTime gameTime) //update all game logic
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Microsoft.Xna.Framework.Input.Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.F4))     //allows to toggle fullscreen with F4
+                _graphics.ToggleFullScreen();
+            
+
 
             // TODO: Add your update logic here
             Globals.keyState = Keyboard.GetState();
