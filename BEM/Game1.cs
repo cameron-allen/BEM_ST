@@ -13,8 +13,10 @@ namespace BEM
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = 640;       //sets screen to 640 by 360 pixels
-            _graphics.PreferredBackBufferHeight = 360;
+            Globals.screenWidth = 640;
+            Globals.screenHeight = 360;
+            _graphics.PreferredBackBufferWidth = Globals.screenWidth;       //sets screen to 640 by 360 pixels
+            _graphics.PreferredBackBufferHeight = Globals.screenHeight;
             _graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
             IsMouseVisible = false;

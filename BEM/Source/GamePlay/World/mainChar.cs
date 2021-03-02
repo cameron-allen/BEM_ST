@@ -12,8 +12,9 @@ namespace BEM.Source.GamePlay.World
     {
         float sprint = 1;
         int instance = 0;
+        bool checkScroll;
 
-        Vector2 velocity;
+        public Vector2 velocity;
         bool isJumping;
         float initPos;
 
@@ -72,13 +73,19 @@ namespace BEM.Source.GamePlay.World
                 }
 
                 pos = new Vector2(pos.X - 2 * sprint, pos.Y);
+                checkScroll = true;
             }
             if (Globals.keyState.IsKeyDown(Keys.S)) //if S key is pressed & sprite isn't jumping. go down
             {
                 if (isJumping != true)
                 {
-                    pos = new Vector2(pos.X, pos.Y + 2 * sprint);
+                    if (pos.Y <= 314)
+                    {
+                        pos = new Vector2(pos.X, pos.Y + 2 * sprint);
+                    }
+                   
                 }
+                checkScroll = true;
             }
             if (Globals.keyState.IsKeyDown(Keys.D))     //if D key is pressed. go right and flip sprite if it isn't already flipped
             {
@@ -89,27 +96,33 @@ namespace BEM.Source.GamePlay.World
                 }
 
                 pos = new Vector2(pos.X + 2 * sprint, pos.Y);
+                checkScroll = true;
             }
             if (Globals.keyState.IsKeyDown(Keys.W))     //if W key is pressed & sprite isn't jumping. go up
             {
                 if (isJumping != true)
                 {
-                    pos = new Vector2(pos.X, pos.Y - 2 * sprint);
+                    if (pos.Y >= 100)
+                    {
+                        pos = new Vector2(pos.X, pos.Y - 2 * sprint);
+                    }
+                    //pos = new Vector2(pos.X, pos.Y - 2 * sprint);
                 }
+                checkScroll = true;
             }
 
         }
 
-        public override void Update() //updates sprite
+        public override void Update(Vector2 OFFSET) //updates sprite
         {
-
+            checkScroll = false;
             updMove();
-            base.Update();
+            base.Update(OFFSET);
         }
 
-        public override void Draw() //draws sprite on screen
+        public override void Draw(Vector2 OFFSET) //draws sprite on screen
         {
-            base.Draw();
+            base.Draw(OFFSET);
         }
     }
 }
