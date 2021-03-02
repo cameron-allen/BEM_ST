@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using BEM.Source.Engine.Camera;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -22,6 +23,7 @@ namespace BEM
         public static KeyboardState keyState;
         public static int screenWidth;
         public static int screenHeight;
+        public static Camera2d _camera;
 
         public static GameTime time;
     }

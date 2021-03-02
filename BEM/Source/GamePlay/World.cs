@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using BEM.Source.GamePlay.World;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.ComponentModel;
+using BEM.Source.Engine.Camera;
 
 namespace BEM.Source.Engine
 {
@@ -17,10 +20,10 @@ namespace BEM.Source.Engine
             offset = new Vector2(0, 0);
         }
 
-
         public virtual void Update()
         {
             m_char.Update(offset);
+            //Globals._camera.Follow(m_char.pos, m_char.dims);
         }
 
         public virtual void Draw()

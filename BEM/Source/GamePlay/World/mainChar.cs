@@ -11,16 +11,24 @@ namespace BEM.Source.GamePlay.World
     class MainChar : Basic2d
     {
         float sprint = 1;
+        int offScrnSide = 0;
         int instance = 0;
-        bool checkScroll;
 
         public Vector2 velocity;
+
         bool isJumping;
+        bool isOffScreen;
+        bool canMove;
+
         float initPos;
+        float desPos;
 
         public MainChar(string PATH, Vector2 POS, Vector2 DIMS) : base(PATH, POS, DIMS)
         {
+            canMove = true;
             isJumping = false;
+            isOffScreen = false;
+
         }
 
        
@@ -55,7 +63,7 @@ namespace BEM.Source.GamePlay.World
             
             if (Globals.keyState.IsKeyDown(Keys.LeftShift))     //increases speed of movenment when shift is down (aka sprint)
             {
-                //Debug.WriteLine(pos.Y);
+                Debug.WriteLine(pos.X);
                 sprint = (float)2.5;
             }
             else
@@ -73,7 +81,7 @@ namespace BEM.Source.GamePlay.World
                 }
 
                 pos = new Vector2(pos.X - 2 * sprint, pos.Y);
-                checkScroll = true;
+                
             }
             if (Globals.keyState.IsKeyDown(Keys.S)) //if S key is pressed & sprite isn't jumping. go down
             {
@@ -85,7 +93,7 @@ namespace BEM.Source.GamePlay.World
                     }
                    
                 }
-                checkScroll = true;
+               
             }
             if (Globals.keyState.IsKeyDown(Keys.D))     //if D key is pressed. go right and flip sprite if it isn't already flipped
             {
@@ -96,7 +104,7 @@ namespace BEM.Source.GamePlay.World
                 }
 
                 pos = new Vector2(pos.X + 2 * sprint, pos.Y);
-                checkScroll = true;
+               
             }
             if (Globals.keyState.IsKeyDown(Keys.W))     //if W key is pressed & sprite isn't jumping. go up
             {
@@ -108,15 +116,35 @@ namespace BEM.Source.GamePlay.World
                     }
                     //pos = new Vector2(pos.X, pos.Y - 2 * sprint);
                 }
-                checkScroll = true;
+              
             }
 
         }
 
         public override void Update(Vector2 OFFSET) //updates sprite
         {
-            checkScroll = false;
-            updMove();
+            if (pos.X == 699 | pos.X == -38)
+            {
+                if (pos.X <= 699)
+                {
+                    offScrnSide = 1;
+                    desPos = 36;
+                }
+                else if (pos.X >= -38)
+                {
+                    offScrnSide = 2;
+                    desPos = 606;
+                }
+                isOffScreen = true;
+                canMove = false;
+            }
+
+            Globals._camera.Pan(canMove, pos, offScrnSide, desPos);
+
+            if (canMove)
+            {
+                updMove();
+            }
             base.Update(OFFSET);
         }
 

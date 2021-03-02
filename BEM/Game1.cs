@@ -1,13 +1,18 @@
 ﻿using BEM.Source.Engine;
+using BEM.Source.Engine.Camera;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.ComponentModel;
+
 
 namespace BEM
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
+
         private World world;
 
         public Game1()
@@ -33,6 +38,10 @@ namespace BEM
         {
             Globals.content = this.Content;
             Globals._spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Globals._camera = new Camera2d();
+
+            
 
             // TODO: use this.Content to load your game content here
             world = new World();
@@ -66,7 +75,7 @@ namespace BEM
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend); //transformMatrix: Globals._camera.Transform
 
             world.Draw();
 
