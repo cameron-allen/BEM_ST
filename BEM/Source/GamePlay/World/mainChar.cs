@@ -11,24 +11,19 @@ namespace BEM.Source.GamePlay.World
     class MainChar : Basic2d
     {
         float sprint = 1;
-        int offScrnSide = 0;
         int instance = 0;
 
         public Vector2 velocity;
 
         bool isJumping;
-        bool isOffScreen;
-        bool canMove;
 
         float initPos;
-        float desPos;
 
         public MainChar(string PATH, Vector2 POS, Vector2 DIMS) : base(PATH, POS, DIMS)
         {
-            canMove = true;
+           
             isJumping = false;
-            isOffScreen = false;
-
+          
         }
 
        
@@ -123,28 +118,8 @@ namespace BEM.Source.GamePlay.World
 
         public override void Update(Vector2 OFFSET) //updates sprite
         {
-            if (pos.X == 699 | pos.X == -38)
-            {
-                if (pos.X <= 699)
-                {
-                    offScrnSide = 1;
-                    desPos = 36;
-                }
-                else if (pos.X >= -38)
-                {
-                    offScrnSide = 2;
-                    desPos = 606;
-                }
-                isOffScreen = true;
-                canMove = false;
-            }
-
-            Globals._camera.Pan(canMove, pos, offScrnSide, desPos);
-
-            if (canMove)
-            {
-                updMove();
-            }
+            updMove();
+            
             base.Update(OFFSET);
         }
 
