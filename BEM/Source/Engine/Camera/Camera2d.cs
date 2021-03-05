@@ -6,39 +6,48 @@ using System.Text;
 
 namespace BEM.Source.Engine.Camera
 {
-    public class Camera2d
+    public class Camera2d  
     {
-        public Matrix Transform { get; private set; }
+        //block of code comes from https://www.youtube.com/watch?v=ceBCDKU_mNw
+        public Nullable<Matrix> Transform { get; private set; }
+        int initcPos = Globals.screenWidth + 20;
+        int initnPos = (Globals.screenWidth + 20) + Globals.screenWidth;
 
-        public void Follow(Vector2 POS, Vector2 DIMS)
+        public void Follow(Vector2 POS, Vector2 DIMS)       //camera follows the player 
         {
-            var position = Transform = Matrix.CreateTranslation(-POS.X - (DIMS.X / 2), -POS.Y - (DIMS.Y / 2), 0); 
+            var position = Transform = Matrix.CreateTranslation(-POS.X + 55 - (DIMS.X / 2), -POS.Y + 50 - (DIMS.Y / 2), 0);     //sets translation to center of sprite (the + 55 and -50 word hard coded to adjust for error)
             
-            var offset = Matrix.CreateTranslation(Globals.screenWidth/2, Globals.screenHeight/2, 0);
+            var offset = Matrix.CreateTranslation(Globals.screenWidth/2, Globals.screenHeight/2, 0);    //pushes sprite to the center of the screen
 
-            Transform = position * offset;
+            Transform = position * offset; //translates center of sprite to be exactly in the center of the secreen
 
         }
-
-        public void Pan(bool canMove, Vector2 POS, int offScrnSide, float desPos)
+        //block end
+        public void Pan(Vector2 POS, Vector2 DIMS)   //Work in Progress function of my own
         {
-            if (!canMove)
+            int curPos = initcPos;
+            int nPos = initnPos;
+            
+            if (POS.X < curPos)
             {
-                float direction = 0;
-                if (offScrnSide == 1)
-                {
-                    direction = -4;
-                }else if (offScrnSide == 2)
-                {
-                    direction = 4;
-                }
-                POS = new Vector2(POS.X + direction, POS.Y);
-                if (POS.X == desPos)
-                {
-                    canMove = true;
-                    offScrnSide = 0;
-                }
+                Transform = null;
             }
+
+            //Transform = null;
+            var position = Transform;
+            
+            if (POS.X >= curPos && POS.X < 665)//&& POS.X >= 665)
+            {
+                
+               
+                position = Transform = Matrix.CreateTranslation(-POS.X - 64, -POS.Y + (Globals.screenHeight) - 64, 0);
+                //var offset = Matrix.CreateTranslation(Globals.screenWidth / 2, Globals.screenHeight / 2, 0);    //pushes sprite to the center of the screen
+
+
+                Transform = position;
+
+            }
+            
         }
 
 

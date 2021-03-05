@@ -39,8 +39,6 @@ namespace BEM
             Globals.content = this.Content;
             Globals._spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Globals._camera = new Camera2d();
-
             
 
             // TODO: use this.Content to load your game content here
@@ -75,7 +73,7 @@ namespace BEM
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend); //transformMatrix: Globals._camera.Transform
+            Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: Globals._camera.Transform); //transformMatrix: Globals._camera.Transform    SpriteSortMode.Deferred, BlendState.AlphaBlend
 
             world.Draw();
 
