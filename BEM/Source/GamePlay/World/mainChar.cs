@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using BEM.Source.Engine.Camera;
+using BEM.Source.Engine;
 
 namespace BEM.Source.GamePlay.World
 {
@@ -16,12 +18,10 @@ namespace BEM.Source.GamePlay.World
         public Vector2 velocity;
 
         bool isJumping;
-
         float initPos;
 
         public MainChar(string PATH, Vector2 POS, Vector2 DIMS) : base(PATH, POS, DIMS)
         {
-           
             isJumping = false;
           
         }
@@ -36,6 +36,7 @@ namespace BEM.Source.GamePlay.World
             //with the exception of the initial position implementation. I came up with this so the jump stops where the jump started
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && isJumping == false)        //detects if the spirte is jumping when space is pressed (prevents spam jumping)
             {
+                Debug.WriteLine(Camera2d.screenNum);
                 initPos = pos.Y; //inital position equals Y coordinate when space is spressed
                 pos.Y -= 10f;
                 velocity.Y = -5f;
@@ -71,18 +72,21 @@ namespace BEM.Source.GamePlay.World
                 if (instance == 0)
                 {
 
-                    ChangePath("2d\\nerd_flip");
+                    ChangePath("bin/Windows/Content/nerd_flip");
                     instance = 1;
                 }
-
-                pos = new Vector2(pos.X - 2 * sprint, pos.Y);
+                if (pos.X > 30)
+                {
+                    pos = new Vector2(pos.X - 2 * sprint, pos.Y);
+                }
+                //pos = new Vector2(pos.X - 2 * sprint, pos.Y);
                 
             }
             if (Globals.keyState.IsKeyDown(Keys.S)) //if S key is pressed & sprite isn't jumping. go down
             {
                 if (isJumping != true)
                 {
-                    if (pos.Y <= 314)
+                    if (pos.Y <= 292)
                     {
                         pos = new Vector2(pos.X, pos.Y + 2 * sprint);
                     }
@@ -94,22 +98,25 @@ namespace BEM.Source.GamePlay.World
             {
                 if (instance == 1)
                 {
-                    ChangePath("2d\\nerd");
+                    ChangePath("bin/Windows/Content/nerd");
                     instance = 0;
                 }
-
-                pos = new Vector2(pos.X + 2 * sprint, pos.Y);
+                if (pos.X < (Globals.screenWidth * 3) - 30)
+                {
+                    pos = new Vector2(pos.X + 2 * sprint, pos.Y);
+                }
+                
                
             }
             if (Globals.keyState.IsKeyDown(Keys.W))     //if W key is pressed & sprite isn't jumping. go up
             {
                 if (isJumping != true)
                 {
-                    if (pos.Y >= 100)
+                    if (pos.Y >= 145)
                     {
                         pos = new Vector2(pos.X, pos.Y - 2 * sprint);
                     }
-                    //pos = new Vector2(pos.X, pos.Y - 2 * sprint);
+                   
                 }
               
             }
@@ -119,13 +126,14 @@ namespace BEM.Source.GamePlay.World
         public override void Update(Vector2 OFFSET) //updates sprite
         {
             updMove();
-            
             base.Update(OFFSET);
         }
 
         public override void Draw(Vector2 OFFSET) //draws sprite on screen
         {
+            
             base.Draw(OFFSET);
+            
         }
     }
 }
