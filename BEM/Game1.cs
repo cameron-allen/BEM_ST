@@ -1,4 +1,5 @@
-﻿using BEM.Source.Engine;
+﻿using BEM.Source;
+using BEM.Source.Engine;
 using BEM.Source.Engine.Background;
 using BEM.Source.Engine.Camera;
 using Microsoft.Xna.Framework;
@@ -18,19 +19,23 @@ namespace BEM
 
         private Align_Basic2d wall;
         private Align_Basic2d floor;
-        public Align_Basic2d torch;
+
+        Animation2d torch01;
+        Animation2d torch02;
+        Animation2d torch03;
+
         public Align_Basic2d torch_light;
-        Animation2d torch_an;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-        
+
             Globals.screenWidth = 640;
             Globals.screenHeight = 360;
             _graphics.PreferredBackBufferWidth = Globals.screenWidth;       //sets screen to 640 by 360 pixels
             _graphics.PreferredBackBufferHeight = Globals.screenHeight;
             _graphics.IsFullScreen = false;
+
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
         }
@@ -39,8 +44,7 @@ namespace BEM
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-            torch_an = new Animation2d(Globals.content.Load<Texture2D>("bin/Windows/Content/Wall/torch_idle"), new Vector2(400, 200), new Vector2(128, 128), 3, true);
-
+            
         }
 
         protected override void LoadContent() 
@@ -49,7 +53,15 @@ namespace BEM
             Globals._spriteBatch = new SpriteBatch(GraphicsDevice);
 
             wall = new Align_Basic2d("bin/Windows/Content/Wall/rock_back", new Vector2(0, 130), new Vector2(64, 64), new Vector2(11, 3));
-            torch = new Align_Basic2d("bin/Windows/Content/Wall/torch", new Vector2(107, 50), new Vector2(128, 128), new Vector2(3, 1));
+           
+            torch01 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(107, 50), new Vector2(128, 128), 3);
+            torch01.setInterval(150);
+            torch02 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(320, 50), new Vector2(128, 128), 3);
+            torch02.setInterval(150);
+            torch03 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(534, 50), new Vector2(128, 128), 3);
+            torch03.setInterval(150);
+
+            //torch = new Align_Animation2d(t, new Vector2(107, 50), new Vector2(128, 128), new Vector2(3, 1), );
             torch_light = new Align_Basic2d("bin/Windows/Content/Wall/torch_light", new Vector2(107, 50), new Vector2(128, 128), new Vector2(3, 1));
             floor = new Align_Basic2d("bin/Windows/Content/Floor/large_tile_floor", new Vector2(0, 386), new Vector2(64, 64), new Vector2(11, 4));
 
@@ -90,14 +102,17 @@ namespace BEM
             {
                 floor.ChangePath("bin/Windows/Content/Floor/large_tile_floor");
             }
-            torch_an.Update(Globals.time);
-
+            
             floor.Update(Vector2.Zero);
             
             torch_light.Update(new Vector2(85, 0));
-            torch.Update(new Vector2(85, 0));
 
-            world.Update();
+            torch01.Update(gameTime);
+            torch02.Update(gameTime);
+            torch03.Update(gameTime);
+
+
+            world.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -109,16 +124,16 @@ namespace BEM
             Globals._spriteBatch.Begin();
             wall.Draw();
             floor.Draw();
-            torch.Draw();
+            torch01.Draw(Globals._spriteBatch);
+            torch02.Draw(Globals._spriteBatch);
+            torch03.Draw(Globals._spriteBatch);
             torch_light.Draw();
             Globals._spriteBatch.End();
 
             // TODO: Add your drawing code here
             Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: Globals._camera.Transform); //transformMatrix: Globals._camera.Transform    SpriteSortMode.Deferred, BlendState.AlphaBlend
 
-            torch_an.Draw(Globals._spriteBatch);
             world.Draw();
-
 
             Globals._spriteBatch.End();
 

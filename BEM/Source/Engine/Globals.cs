@@ -25,6 +25,6 @@ namespace BEM
         public static int screenHeight;
         public static Camera2d _camera;
 
-        public static GameTime time = new GameTime();
+        //public static GameTime time = new GameTime();
     }
 }

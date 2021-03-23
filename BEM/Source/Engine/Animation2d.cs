@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace BEM.Source.Engine
@@ -11,63 +12,93 @@ namespace BEM.Source.Engine
     {
         Rectangle rectangle;
         Vector2 origin;
-        Vector2 dims;
-        Vector2 pos;
+        public Vector2 dims;
+        public Vector2 pos;
         Texture2D texture;
+        Texture2D idleTexture;
 
-        bool idle;
-        int currFrame; 
+        public int currFrame; 
         int sheetSize; //will use to set how many sprites are on the sheet
         float timer;
+        int instance;
         float interval = 75; //interval between frames
+        float prevLocX;
 
-        public Animation2d(Texture2D TEXTURE, Vector2 POS, Vector2 DIMS, int SHEETSIZE, bool IDLE)
+        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE)
         {
-            texture = TEXTURE;
+            if (WALK != null)
+            {
+                texture = Globals.content.Load<Texture2D>(WALK);
+            }
+            //texture = Globals.content.Load<Texture2D>(WALK);
+
+            if (I != null)
+            {
+                idleTexture = Globals.content.Load<Texture2D>(I);
+            }
             pos = POS;
             dims = DIMS;
-
+            instance = 1;
+            prevLocX = 0;
             sheetSize = SHEETSIZE;
-            idle = IDLE;
         }
-
-        public void Update(GameTime gameTime) //updates animation
+        public void setInterval(int INTERVAL)
+        {
+            interval = INTERVAL;
+        }
+        public virtual void Update(GameTime gameTime) //updates animation
         {
             rectangle = new Rectangle(currFrame * (int)dims.X, 0, (int)dims.X, (int)dims.Y);
             origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
-            //pos = pos + velocity;
+            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (idle)
+            if (!(sheetSize == 1) && texture != null)
+            {
+
+                if (prevLocX < pos.X)
+                {
+                    instance = 1;
+                    AnimateRight(gameTime);
+
+                }
+                else if (prevLocX > pos.X)
+                {
+                    instance = 2;
+                    AnimateLeft(gameTime);
+
+
+                }else
+                {
+                    if (instance == 1)
+                    {
+                        currFrame = 0;
+                    }
+                    else
+                    {
+                        currFrame = sheetSize / 2;
+                    }
+                }
+                
+                prevLocX = pos.X;
+
+            }else if (!(sheetSize == 1) && idleTexture != null)
             {
                 AnimateIdle(gameTime);
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                AnimateRight(gameTime);
-                //velocity.X = 3;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                AnimateLeft(gameTime);
-                //velocity.X = -3;
-            }
-            else
-            {
-                
-            }
+           
         }
 
         public void AnimateRight(GameTime gameTime) //goes through animation for going right
         {
            
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            //timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             
             
             if (timer >= interval)
             {
                 currFrame++;
                 timer = 0;
-                if (currFrame > sheetSize/2)
+                if (currFrame >= sheetSize/2)
                 {
                     currFrame = 0;
                 }
@@ -76,13 +107,11 @@ namespace BEM.Source.Engine
 
         public void AnimateIdle(GameTime gameTime) //goes through animation for going left
         {
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;
-            //currFrame++;
             if (timer >= interval)
             {
                 currFrame++;
                 timer = 0;
-                if (currFrame > sheetSize)
+                if (currFrame >= sheetSize)
                 {
                     currFrame = 0;
                 }
@@ -91,21 +120,28 @@ namespace BEM.Source.Engine
 
         public void AnimateLeft(GameTime gameTime) //goes through animation for going left
         {
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;
             if (timer > interval)
             {
                 currFrame++;
                 timer = 0;
-                if (currFrame > sheetSize || currFrame < sheetSize/2)
+                if (currFrame >= sheetSize || currFrame < sheetSize/2)
                 {
                     currFrame = 4;
                 }
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch) //draws sprite
+        public virtual void Draw(SpriteBatch spriteBatch) //draws sprite
         {
-            spriteBatch.Draw(texture, pos, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            if (texture != null)
+            {
+                spriteBatch.Draw(texture, pos, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            }
+                
+            else
+            {
+                spriteBatch.Draw(idleTexture, pos, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            }
         } 
     }
 }
