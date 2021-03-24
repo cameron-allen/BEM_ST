@@ -11,7 +11,17 @@ namespace BEM.Source.Engine
     public class Animation2d     //class from https://www.youtube.com/watch?v=orQO9O1ikkw
     {
         Rectangle rectangle;
+
+        public Rectangle Rectangle
+        {
+            get
+            {
+                return new Rectangle((int)pos.X, (int)pos.Y, (int)dims.X, (int)dims.Y);
+            }
+        }
+
         Vector2 origin;
+        public Vector2 velocity;
         public Vector2 dims;
         public Vector2 pos;
         Texture2D texture;
@@ -20,9 +30,11 @@ namespace BEM.Source.Engine
         public int currFrame; 
         int sheetSize; //will use to set how many sprites are on the sheet
         float timer;
-        int instance;
+        public int instance;
         float interval = 75; //interval between frames
+ 
         float prevLocX;
+        float prevLocY;
 
         public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE)
         {
@@ -67,18 +79,37 @@ namespace BEM.Source.Engine
                     AnimateLeft(gameTime);
 
 
-                }else
-                {
+                }
+                else if (prevLocY != pos.Y && prevLocX == pos.X) 
+                { 
                     if (instance == 1)
                     {
-                        currFrame = 0;
+                        AnimateRight(gameTime);
+                    }else if (instance == 2)
+                    {
+                        AnimateLeft(gameTime);
+                    }
+                }
+                else
+                {
+                    if (idleTexture != null)
+                    {
+                        AnimateIdle(gameTime);
                     }
                     else
                     {
-                        currFrame = sheetSize / 2;
+                        if (instance == 1)
+                        {
+                            currFrame = 0;
+                        }
+                        else
+                        {
+                            currFrame = sheetSize / 2;
+                        }
                     }
+
                 }
-                
+                prevLocY = pos.Y;
                 prevLocX = pos.X;
 
             }else if (!(sheetSize == 1) && idleTexture != null)
@@ -98,7 +129,7 @@ namespace BEM.Source.Engine
             {
                 currFrame++;
                 timer = 0;
-                if (currFrame >= sheetSize/2)
+                if (currFrame >= sheetSize / 2)
                 {
                     currFrame = 0;
                 }
@@ -126,7 +157,7 @@ namespace BEM.Source.Engine
                 timer = 0;
                 if (currFrame >= sheetSize || currFrame < sheetSize/2)
                 {
-                    currFrame = 4;
+                    currFrame = sheetSize / 2;
                 }
             }
         }
@@ -144,4 +175,14 @@ namespace BEM.Source.Engine
             }
         } 
     }
+    #region Collision
+    protected bool IsTouchingLeft(Animation2d entity)
+    {
+        return this.Rectangle.Right = this.velocity.X > Animation2d.Rectangle.Left &&
+            this.Rectangle.Left < Animation2d.Rectangle.Left &&
+            this.Rectangle.Bottom > Animation2d.Rectangle.Top &&
+            this.Rectangle.Top < Animation2d.Rectangle.Bottom;
+    }
+    #endregion
+
 }

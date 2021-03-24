@@ -25,11 +25,10 @@ namespace BEM.Source.GamePlay.World
             setInterval(200);
         }
 
-       
-
         private void updMove(GameTime gameTime)
         {
             pos += velocity;
+            setInterval(200);
 
             //this block if code is from https://www.youtube.com/watch?v=ZLxIShw-7ac
             //with the exception of the initial position implementation. I came up with this so the jump stops where the jump started
@@ -42,6 +41,13 @@ namespace BEM.Source.GamePlay.World
             }
             if (isJumping == true)  //if isJumping, velocity downward gradually increases (aka gravity)
             {
+                if (instance == 1)
+                {
+                    currFrame = 0;
+                }else
+                {
+                    currFrame = 4;
+                }
                 float i = 1;
                 velocity.Y += 0.25f * i;
             }
@@ -58,6 +64,7 @@ namespace BEM.Source.GamePlay.World
             if (Globals.keyState.IsKeyDown(Keys.LeftShift))     //increases speed of movenment when shift is down (aka sprint)
             {
                 //Debug.WriteLine(pos.X);
+                setInterval(100);
                 sprint = (float)2.5;
             }
             else
@@ -99,6 +106,7 @@ namespace BEM.Source.GamePlay.World
             }
             if (Globals.keyState.IsKeyDown(Keys.W))     //if W key is pressed & sprite isn't jumping. go up
             {
+                
                 if (isJumping != true)
                 {
                     if (pos.Y >= 145)
