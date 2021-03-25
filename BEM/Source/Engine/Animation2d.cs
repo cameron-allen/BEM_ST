@@ -29,7 +29,7 @@ namespace BEM.Source.Engine
         float prevLocX;
         float prevLocY;
 
-        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE)
+        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) //constructor
         {
             if (WALK != null)
             {
@@ -111,7 +111,7 @@ namespace BEM.Source.Engine
                 AnimateIdle(gameTime);
             }
 
-            if (entities != null)
+            if (entities != null)       //checks if Animation2ds are touching
             {
                 foreach (var Animation2d in entities)
                 {
@@ -197,7 +197,7 @@ namespace BEM.Source.Engine
             }
         }
 
-        #region Collision
+        #region Collision //code from https://www.youtube.com/watch?v=CV8P9aq2gQo&t=900s
         protected bool IsTouchingLeft(Animation2d entity)
         {
             return this.rectangle.Right + this.pos.X > entity.rectangle.Left &&

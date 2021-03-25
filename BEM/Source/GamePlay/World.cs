@@ -13,13 +13,12 @@ namespace BEM.Source.Engine
     public class World
     {
         public Vector2 offset;  //main character offset
-        MainChar m_char;        //main character
         MainChar char_hitbox;
-        //Animation2d test;
+ 
         public Vector2 enOff;
 
-        private List<Animation2d> entities;
-        //Animation2d torch;
+        private List<Animation2d> entities; //holds entities (Animation2d objects) that will collide
+
 
 
         public World()
@@ -27,14 +26,12 @@ namespace BEM.Source.Engine
             //file location, screen loc, dims
             entities = new List<Animation2d>()
             {
-                new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(64, 96), 8) {},
-                new Animation2d("bin/Windows/Content/images", null, new Vector2(900, 300), new Vector2(256, 256), 1) {}
+                new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(64, 96), 8) {}, //main character
+                new Animation2d("bin/Windows/Content/images", null, new Vector2(900, 300), new Vector2(256, 256), 1) {} //test collision object
 
             //initailizes main character sprite and location
             };
-            m_char = new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(64, 96), 8); //initailizes main character sprite and location
             char_hitbox = new MainChar("bin/Windows/Content/char_hitbox", null, new Vector2(300, 300), new Vector2(64, 96), 1);
-            //test = new Animation2d("bin/Windows/Content/images", null, new Vector2(900, 300), new Vector2(256, 256), 1);
             offset = new Vector2(0, 0);
             enOff = new Vector2(0, 0);
             Globals._camera = new Camera2d();
@@ -48,23 +45,19 @@ namespace BEM.Source.Engine
                 Animation2d.Update(gameTime, entities);
             }
 
-            m_char.Update(gameTime, null);
             char_hitbox.Update(gameTime, null);
-            //test.Update(gameTime, entities);
-            //torch.Update(Globals.time);
-            Globals._camera.Pan(m_char.pos, m_char.dims);
+            Globals._camera.Pan(char_hitbox.pos, char_hitbox.dims);
         }
 
         public virtual void Draw()
         {
-            //torch.Draw(Globals._spriteBatch);
-            //test.Draw(Globals._spriteBatch);
+            
             foreach (var Animation2d in entities)
             {
                 Animation2d.Draw(Globals._spriteBatch);
             }
-            //m_char.Draw(Globals._spriteBatch);
-            char_hitbox.Draw(Globals._spriteBatch);
+            
+            //char_hitbox.Draw(Globals._spriteBatch);
         }
     }
 }
