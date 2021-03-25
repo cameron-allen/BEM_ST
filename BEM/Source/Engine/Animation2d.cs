@@ -10,15 +10,8 @@ namespace BEM.Source.Engine
 {
     public class Animation2d     //class from https://www.youtube.com/watch?v=orQO9O1ikkw
     {
-        Rectangle rectangle;
-
-        public Rectangle Rectangle
-        {
-            get
-            {
-                return new Rectangle((int)pos.X, (int)pos.Y, (int)dims.X, (int)dims.Y);
-            }
-        }
+        public Rectangle rectangle;
+        Color color;
 
         Vector2 origin;
         public Vector2 velocity;
@@ -53,12 +46,13 @@ namespace BEM.Source.Engine
             instance = 1;
             prevLocX = 0;
             sheetSize = SHEETSIZE;
+            color = Color.White;
         }
         public void setInterval(int INTERVAL)
         {
             interval = INTERVAL;
         }
-        public virtual void Update(GameTime gameTime) //updates animation
+        public virtual void Update(GameTime gameTime, List<Animation2d> entities) //updates animation
         {
             rectangle = new Rectangle(currFrame * (int)dims.X, 0, (int)dims.X, (int)dims.Y);
             origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
@@ -116,6 +110,34 @@ namespace BEM.Source.Engine
             {
                 AnimateIdle(gameTime);
             }
+
+            if (entities != null)
+            {
+                foreach (var Animation2d in entities)
+                {
+                    if (Animation2d == this)
+                        continue;
+
+                    if ((this.IsTouchingLeft(Animation2d)) ||
+                        (this.IsTouchingRight(Animation2d)))
+                    {
+                        this.color = Color.Red;
+                        //Debug.Write("hit!");
+                    }
+                    if ((this.IsTouchingTop(Animation2d)) ||
+                       (this.IsTouchingBottom(Animation2d)))
+                    {
+                        this.color = Color.Red;
+                        //Debug.Write("hit!");
+                    }
+                    else if (this.color == Color.Red)
+                    {
+                        this.color = Color.White;
+                    }
+
+
+                }
+            }
            
         }
 
@@ -166,23 +188,47 @@ namespace BEM.Source.Engine
         {
             if (texture != null)
             {
-                spriteBatch.Draw(texture, pos, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, pos, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
             }
                 
             else
             {
-                spriteBatch.Draw(idleTexture, pos, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(idleTexture, pos, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
             }
-        } 
+        }
+
+        #region Collision
+        protected bool IsTouchingLeft(Animation2d entity)
+        {
+            return this.rectangle.Right + this.pos.X > entity.rectangle.Left &&
+                this.rectangle.Left < entity.rectangle.Left &&
+                this.rectangle.Bottom > entity.rectangle.Top &&
+                this.rectangle.Top < entity.rectangle.Bottom;
+        }
+        protected bool IsTouchingRight(Animation2d entity)
+        {
+            return this.rectangle.Left + this.pos.X < entity.rectangle.Right &&
+              this.rectangle.Right > entity.rectangle.Right &&
+              this.rectangle.Bottom > entity.rectangle.Top &&
+              this.rectangle.Top < entity.rectangle.Bottom;
+        }
+
+        protected bool IsTouchingTop(Animation2d entity)
+        {
+            return this.rectangle.Bottom + this.pos.Y > entity.rectangle.Top &&
+              this.rectangle.Top < entity.rectangle.Top &&
+              this.rectangle.Right > entity.rectangle.Left &&
+              this.rectangle.Left < entity.rectangle.Right;
+        }
+
+        protected bool IsTouchingBottom(Animation2d entity)
+        {
+            return this.rectangle.Top + this.pos.Y < entity.rectangle.Bottom &&
+              this.rectangle.Bottom > entity.rectangle.Bottom &&
+              this.rectangle.Right > entity.rectangle.Left &&
+              this.rectangle.Left < entity.rectangle.Right;
+        }
+        #endregion
     }
-    #region Collision
-    protected bool IsTouchingLeft(Animation2d entity)
-    {
-        return this.Rectangle.Right = this.velocity.X > Animation2d.Rectangle.Left &&
-            this.Rectangle.Left < Animation2d.Rectangle.Left &&
-            this.Rectangle.Bottom > Animation2d.Rectangle.Top &&
-            this.Rectangle.Top < Animation2d.Rectangle.Bottom;
-    }
-    #endregion
 
 }

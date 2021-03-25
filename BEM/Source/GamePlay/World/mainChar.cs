@@ -14,8 +14,6 @@ namespace BEM.Source.GamePlay.World
     {
         float sprint = 1;
 
-        public Vector2 velocity;
-
         bool isJumping;
         float initPos;
 
@@ -120,10 +118,10 @@ namespace BEM.Source.GamePlay.World
 
         }
 
-        public override void Update(GameTime gameTime) //updates sprite
+        public override void Update(GameTime gameTime, List<Animation2d> entities) //updates sprite
         {
             updMove(gameTime);
-            base.Update(gameTime);
+            base.Update(gameTime, entities);
         }
 
         public override void Draw(SpriteBatch spriteBatch) //draws sprite on screen

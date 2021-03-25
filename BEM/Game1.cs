@@ -107,9 +107,9 @@ namespace BEM
             
             torch_light.Update(new Vector2(85, 0));
 
-            torch01.Update(gameTime);
-            torch02.Update(gameTime);
-            torch03.Update(gameTime);
+            torch01.Update(gameTime, null);
+            torch02.Update(gameTime, null);
+            torch03.Update(gameTime, null);
 
 
             world.Update(gameTime);
