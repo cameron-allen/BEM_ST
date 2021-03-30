@@ -11,6 +11,7 @@ namespace BEM.Source.Engine
     public class Animation2d     //class from https://www.youtube.com/watch?v=orQO9O1ikkw
     {
         public Rectangle rectangle;
+
         Color color;
 
         Vector2 origin;
@@ -115,27 +116,20 @@ namespace BEM.Source.Engine
             {
                 foreach (var Animation2d in entities)
                 {
+                    
                     if (Animation2d == this)
                         continue;
 
-                    if ((this.IsTouchingLeft(Animation2d)) ||
-                        (this.IsTouchingRight(Animation2d)))
+                    this.color = Color.White;
+          
+
+                    if (this.pos.X <= Animation2d.pos.X + Animation2d.dims.X &&
+                        this.pos.X + this.dims.X >= Animation2d.pos.X &&
+                        this.pos.Y <= Animation2d.pos.Y + Animation2d.dims.Y/4 &&
+                        this.pos.Y + this.dims.Y/4 >= Animation2d.pos.Y)
                     {
                         this.color = Color.Red;
-                        //Debug.Write("hit!");
                     }
-                    if ((this.IsTouchingTop(Animation2d)) ||
-                       (this.IsTouchingBottom(Animation2d)))
-                    {
-                        this.color = Color.Red;
-                        //Debug.Write("hit!");
-                    }
-                    else if (this.color == Color.Red)
-                    {
-                        this.color = Color.White;
-                    }
-
-
                 }
             }
            
@@ -143,10 +137,7 @@ namespace BEM.Source.Engine
 
         public void AnimateRight(GameTime gameTime) //goes through animation for going right
         {
-           
-            //timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            
-            
+                     
             if (timer >= interval)
             {
                 currFrame++;
@@ -196,39 +187,6 @@ namespace BEM.Source.Engine
                 spriteBatch.Draw(idleTexture, pos, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
             }
         }
-
-        #region Collision //code from https://www.youtube.com/watch?v=CV8P9aq2gQo&t=900s
-        protected bool IsTouchingLeft(Animation2d entity)
-        {
-            return this.rectangle.Right + this.pos.X > entity.rectangle.Left &&
-                this.rectangle.Left < entity.rectangle.Left &&
-                this.rectangle.Bottom > entity.rectangle.Top &&
-                this.rectangle.Top < entity.rectangle.Bottom;
-        }
-        protected bool IsTouchingRight(Animation2d entity)
-        {
-            return this.rectangle.Left + this.pos.X < entity.rectangle.Right &&
-              this.rectangle.Right > entity.rectangle.Right &&
-              this.rectangle.Bottom > entity.rectangle.Top &&
-              this.rectangle.Top < entity.rectangle.Bottom;
-        }
-
-        protected bool IsTouchingTop(Animation2d entity)
-        {
-            return this.rectangle.Bottom + this.pos.Y > entity.rectangle.Top &&
-              this.rectangle.Top < entity.rectangle.Top &&
-              this.rectangle.Right > entity.rectangle.Left &&
-              this.rectangle.Left < entity.rectangle.Right;
-        }
-
-        protected bool IsTouchingBottom(Animation2d entity)
-        {
-            return this.rectangle.Top + this.pos.Y < entity.rectangle.Bottom &&
-              this.rectangle.Bottom > entity.rectangle.Bottom &&
-              this.rectangle.Right > entity.rectangle.Left &&
-              this.rectangle.Left < entity.rectangle.Right;
-        }
-        #endregion
     }
 
 }

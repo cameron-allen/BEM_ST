@@ -26,10 +26,8 @@ namespace BEM.Source.Engine
             //file location, screen loc, dims
             entities = new List<Animation2d>()
             {
-                new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(64, 96), 8) {}, //main character
-                new Animation2d("bin/Windows/Content/images", null, new Vector2(900, 300), new Vector2(256, 256), 1) {} //test collision object
-
-            //initailizes main character sprite and location
+                new Animation2d("bin/Windows/Content/nerd_move", null, new Vector2(400, 150), new Vector2(64, 96), 1) {}, //test collision object
+                new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(64, 96), 8) {} //main character
             };
             char_hitbox = new MainChar("bin/Windows/Content/char_hitbox", null, new Vector2(300, 300), new Vector2(64, 96), 1);
             offset = new Vector2(0, 0);
@@ -56,7 +54,7 @@ namespace BEM.Source.Engine
             {
                 Animation2d.Draw(Globals._spriteBatch);
             }
-            
+
             //char_hitbox.Draw(Globals._spriteBatch);
         }
     }
