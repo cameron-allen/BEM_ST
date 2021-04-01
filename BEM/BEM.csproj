@@ -20,6 +20,7 @@
     <None Remove="Content\bin\Windows\Content\nerd_flip.xnb" />
     <None Remove="Content\bin\Windows\Content\nerd_move.xnb" />
     <None Remove="Content\bin\Windows\Content\nerd_punch.xnb" />
+    <None Remove="Content\bin\Windows\Content\nerd_punch_hitbox.xnb" />
     <None Remove="Content\bin\Windows\Content\Wall\rock_back.xnb" />
     <None Remove="Content\bin\Windows\Content\Wall\torch.xnb" />
     <None Remove="Content\bin\Windows\Content\Wall\torch_idle.xnb" />
@@ -57,6 +58,9 @@
     <Content Include="Content\bin\Windows\Content\nerd_punch.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bin\Windows\Content\nerd_punch_hitbox.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\bin\Windows\Content\Wall\rock_back.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -83,5 +87,10 @@
   <ItemGroup>
     <Folder Include="Content\Audio\" />
     <Folder Include="Content\Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\bin\Windows\nerd_punch.xnb">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

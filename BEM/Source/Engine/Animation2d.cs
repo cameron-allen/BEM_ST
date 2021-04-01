@@ -18,20 +18,24 @@ namespace BEM.Source.Engine
         public Vector2 velocity;
         public Vector2 dims;
         public Vector2 pos;
-        Texture2D texture;
+        public Texture2D texture;
         Texture2D idleTexture;
+        public string walk;
+        public bool isPunching;
 
         public int currFrame; 
         int sheetSize; //will use to set how many sprites are on the sheet
         float timer;
         public int instance;
-        float interval = 75; //interval between frames
+        public float interval; //interval between frames
  
         float prevLocX;
         float prevLocY;
 
         public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) //constructor
         {
+            interval = 75;
+            walk = WALK;
             if (WALK != null)
             {
                 texture = Globals.content.Load<Texture2D>(WALK);
@@ -75,7 +79,7 @@ namespace BEM.Source.Engine
 
 
                 }
-                else if (prevLocY != pos.Y && prevLocX == pos.X) 
+                else if (prevLocY != pos.Y && prevLocX == pos.X || isPunching) 
                 { 
                     if (instance == 1)
                     {

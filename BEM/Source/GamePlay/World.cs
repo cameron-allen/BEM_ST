@@ -14,6 +14,7 @@ namespace BEM.Source.Engine
     {
         public Vector2 offset;  //main character offset
         MainChar char_hitbox;
+        MainChar arm_hitbox;
  
         public Vector2 enOff;
 
@@ -27,7 +28,8 @@ namespace BEM.Source.Engine
             entities = new List<Animation2d>()
             {
                 new Animation2d("bin/Windows/Content/nerd_move", null, new Vector2(400, 150), new Vector2(56, 96), 1) {}, //test collision object
-                new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(56, 96), 8) {} //main character
+                new MainChar("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(56, 96), 8) {}, //main character
+                //new MainChar("bin/Windows/Content/nerd_punch_hitbox", null, new Vector2(300, 300), new Vector2(8, 7), 8) {} //main character
             };
             char_hitbox = new MainChar("bin/Windows/Content/char_hitbox", null, new Vector2(300, 300), new Vector2(64, 96), 1);
             offset = new Vector2(0, 0);
