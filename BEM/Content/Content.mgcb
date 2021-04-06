@@ -121,7 +121,7 @@
 /processorParam:TextureFormat=Color
 /build:nerd_punch.png
 
-#begin nerd_punch_hitbox.gif
+#begin nerd_punch_hitbox.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -131,7 +131,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:nerd_punch_hitbox.gif
+/build:nerd_punch_hitbox.png
 
 #begin Wall/rock_back.png
 /importer:TextureImporter

@@ -10,26 +10,29 @@ using BEM.Source.Engine;
 
 namespace BEM.Source.GamePlay.World
 {
-    class MainChar : Animation2d
+    class Character_Assets : Animation2d
     {
         float sprint = 1;
 
-        bool isJumping;
-        bool isWalking;
+        public bool isJumping;
+        public bool isWalking;
         float initPos;
-        float punchTime;
 
-        public MainChar(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) : base(WALK, I, POS, DIMS, SHEETSIZE)
+        public Character_Assets(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) : base(WALK, I, POS, DIMS, SHEETSIZE)
         {
             isJumping = false;
             setInterval(200);
+        }
+
+        public void setOffset(Vector2 off)
+        {
+            offset += off;
         }
 
         private void updMove(GameTime gameTime)
         {
             pos += velocity;
             setInterval(200);
-            punchTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             isWalking = false;
 
             //this block if code is from https://www.youtube.com/watch?v=ZLxIShw-7ac
@@ -118,26 +121,6 @@ namespace BEM.Source.GamePlay.World
                    
                 }
                 isWalking = true;
-            }
-            if (Globals.keyState.IsKeyDown(Keys.J) && !isPunching && !isJumping && punchTime > 500 && !isWalking)
-            {
-                punchTime = 0;
-                dims.X = 80;
-                this.texture = Globals.content.Load<Texture2D>("bin//Windows/Content//nerd_punch");
-                isPunching = true;
-            }if (isPunching)
-            {
-                setInterval(45);
-                if (this.currFrame == 3 || this.currFrame == 7)
-                {
-                    isPunching = false;
-                    setInterval(75);
-                }
-            }
-            if (isPunching == false)
-            {
-                dims.X = 56;
-                this.texture = Globals.content.Load<Texture2D>(this.walk);
             }
 
         }

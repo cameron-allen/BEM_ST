@@ -22,6 +22,7 @@ namespace BEM.Source.Engine
         Texture2D idleTexture;
         public string walk;
         public bool isPunching;
+        public Vector2 offset;
 
         public int currFrame; 
         int sheetSize; //will use to set how many sprites are on the sheet
@@ -29,8 +30,8 @@ namespace BEM.Source.Engine
         public int instance;
         public float interval; //interval between frames
  
-        float prevLocX;
-        float prevLocY;
+        public float prevLocX;
+        public float prevLocY;
 
         public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) //constructor
         {
@@ -183,12 +184,12 @@ namespace BEM.Source.Engine
         {
             if (texture != null)
             {
-                spriteBatch.Draw(texture, pos, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
             }
                 
             else
             {
-                spriteBatch.Draw(idleTexture, pos, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.Draw(idleTexture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
             }
         }
     }

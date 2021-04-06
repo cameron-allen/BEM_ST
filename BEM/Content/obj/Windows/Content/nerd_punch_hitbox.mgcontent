@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/nerd_punch_hitbox.gif</SourceFile>
-  <SourceTime>2021-04-01T13:50:36.7547461-05:00</SourceTime>
+  <SourceFile>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/nerd_punch_hitbox.png</SourceFile>
+  <SourceTime>2021-04-06T13:10:33.8307544-05:00</SourceTime>
   <DestFile>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/bin/Windows/Content/nerd_punch_hitbox.xnb</DestFile>
-  <DestTime>2021-04-01T13:53:28.405302-05:00</DestTime>
+  <DestTime>2021-04-06T13:14:32.7061688-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T18:17:54-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

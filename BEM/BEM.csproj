@@ -88,9 +88,4 @@
     <Folder Include="Content\Audio\" />
     <Folder Include="Content\Fonts\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="Content\bin\Windows\nerd_punch.xnb">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
