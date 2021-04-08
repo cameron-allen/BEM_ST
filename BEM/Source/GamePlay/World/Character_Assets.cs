@@ -18,15 +18,11 @@ namespace BEM.Source.GamePlay.World
         public bool isWalking;
         float initPos;
 
-        public Character_Assets(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) : base(WALK, I, POS, DIMS, SHEETSIZE)
+        public Character_Assets(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) : base(WALK, I, POS, DIMS, OFFSET, SHEETSIZE)
         {
+            offset = OFFSET;
             isJumping = false;
             setInterval(200);
-        }
-
-        public void setOffset(Vector2 off)
-        {
-            offset += off;
         }
 
         private void updMove(GameTime gameTime)
@@ -121,6 +117,13 @@ namespace BEM.Source.GamePlay.World
                    
                 }
                 isWalking = true;
+            }
+            if (isPunching)
+            {
+                setInterval(30);
+            }else
+            {
+                setInterval(200);
             }
 
         }

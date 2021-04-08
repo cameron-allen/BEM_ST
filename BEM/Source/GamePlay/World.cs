@@ -23,14 +23,14 @@ namespace BEM.Source.Engine
         public World()
         {
             //file location, screen loc, dims
-            arm_hitbox = new Character_Assets("bin/Windows/Content/nerd_punch_hitbox", null, new Vector2(300, 300), new Vector2(32, 20), 1);
+            arm_hitbox = new Character_Assets("bin/Windows/Content/nerd_punch_hitbox", null, new Vector2(300, 300), new Vector2(32, 20), new Vector2(30, -5), 1);
             entities = new List<Animation2d>()
             {
-                new Animation2d("bin/Windows/Content/nerd_move", null, new Vector2(400, 150), new Vector2(56, 96), 1) {}, //test collision object
-                new Player("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(56, 96), 8) {}, //main character
+                new Animation2d("bin/Windows/Content/nerd_move", null, new Vector2(400, 150), new Vector2(56, 96), Vector2.Zero, 1) {}, //test collision object
+                new Player("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(56, 96), Vector2.Zero, 8) {}, //main character
                 //new MainChar("bin/Windows/Content/nerd_punch_hitbox", null, new Vector2(300, 300), new Vector2(8, 7), 8) {} //main character
             };
-            char_hitbox = new Character_Assets("bin/Windows/Content/char_hitbox", null, new Vector2(300, 300), new Vector2(64, 96), 1);
+            char_hitbox = new Character_Assets("bin/Windows/Content/char_hitbox", null, new Vector2(300, 300), new Vector2(64, 96), Vector2.Zero, 1);
             Globals._camera = new Camera2d();
             //Globals._camera.Transform.
         }

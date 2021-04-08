@@ -14,7 +14,7 @@ namespace BEM.Source.GamePlay.World
     {
 
         public float punchTime;
-        public Player(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) : base(WALK, I, POS, DIMS, SHEETSIZE)
+        public Player(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) : base(WALK, I, POS, DIMS, OFFSET, SHEETSIZE)
         {
 
         }
@@ -31,11 +31,11 @@ namespace BEM.Source.GamePlay.World
             }
             if (isPunching)
             {
-                setInterval(5);
+                //setInterval(5);
                 if (this.currFrame == 3 || this.currFrame == 7)
                 {
                     isPunching = false;
-                    setInterval(75);
+                    //INTERVAL(75);
                 }
             }
             if (isPunching == false)

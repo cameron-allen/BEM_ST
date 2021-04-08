@@ -33,7 +33,7 @@ namespace BEM.Source.Engine
         public float prevLocX;
         public float prevLocY;
 
-        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, int SHEETSIZE) //constructor
+        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) //constructor
         {
             interval = 75;
             walk = WALK;
