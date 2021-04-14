@@ -54,11 +54,11 @@ namespace BEM
 
             wall = new Align_Basic2d("bin/Windows/Content/Wall/rock_back", new Vector2(0, 130), new Vector2(64, 64), new Vector2(11, 3));
            
-            torch01 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(107, 50), new Vector2(128, 128), Vector2.Zero, 3);
+            torch01 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(107, 50), new Vector2(128, 128), Vector2.Zero, 3, 0);
             torch01.setInterval(150);
-            torch02 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(320, 50), new Vector2(128, 128), Vector2.Zero, 3);
+            torch02 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(320, 50), new Vector2(128, 128), Vector2.Zero, 3, 0);
             torch02.setInterval(150);
-            torch03 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(534, 50), new Vector2(128, 128), Vector2.Zero, 3);
+            torch03 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(534, 50), new Vector2(128, 128), Vector2.Zero, 3, 0);
             torch03.setInterval(150);
 
             //torch = new Align_Animation2d(t, new Vector2(107, 50), new Vector2(128, 128), new Vector2(3, 1), );

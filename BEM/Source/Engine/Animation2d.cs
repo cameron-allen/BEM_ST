@@ -13,8 +13,11 @@ namespace BEM.Source.Engine
         public Rectangle rectangle;
 
         Color color;
+        int health;
+        bool hasHealth;
+        float coolDown;
 
-        Vector2 origin;
+        public Vector2 origin;
         public Vector2 velocity;
         public Vector2 dims;
         public Vector2 pos;
@@ -23,6 +26,10 @@ namespace BEM.Source.Engine
         public string walk;
         public bool isPunching;
         public Vector2 offset;
+        public Vector2 negOffset;
+
+        public bool isLeft;
+        public bool isRight;
 
         public int currFrame; 
         int sheetSize; //will use to set how many sprites are on the sheet
@@ -33,16 +40,26 @@ namespace BEM.Source.Engine
         public float prevLocX;
         public float prevLocY;
 
-        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) //constructor
+        public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE, int HEALTH) //constructor
         {
+            isLeft = false;
+            isRight = true;
+            if (HEALTH > 0)
+            {
+                this.hasHealth = true;
+                this.health = HEALTH;
+            }else
+            {
+                hasHealth = false;
+            }
+
             interval = 75;
             walk = WALK;
             if (WALK != null)
             {
                 texture = Globals.content.Load<Texture2D>(WALK);
             }
-            //texture = Globals.content.Load<Texture2D>(WALK);
-
+            
             if (I != null)
             {
                 idleTexture = Globals.content.Load<Texture2D>(I);
@@ -54,9 +71,19 @@ namespace BEM.Source.Engine
             sheetSize = SHEETSIZE;
             color = Color.White;
         }
+        public void setHealth(int HEALTH)
+        {
+            this.health = HEALTH;
+            hasHealth = true;
+        }
         public void setInterval(int INTERVAL)
         {
             interval = INTERVAL;
+        }
+
+        public void setPos(Vector2 POS)
+        {
+            pos = POS;
         }
         public virtual void Update(GameTime gameTime, List<Animation2d> entities) //updates animation
         {
@@ -125,15 +152,35 @@ namespace BEM.Source.Engine
                     if (Animation2d == this)
                         continue;
 
-                    this.color = Color.White;
-          
 
-                    if (this.pos.X <= Animation2d.pos.X + Animation2d.dims.X &&
-                        this.pos.X + this.dims.X >= Animation2d.pos.X &&
-                        this.pos.Y <= Animation2d.pos.Y + Animation2d.dims.Y/4 &&
-                        this.pos.Y + this.dims.Y/4 >= Animation2d.pos.Y)
+                    bool overlap;
+                    int adjust = 0;
+                    if (this.isPunching && this.isLeft)
                     {
-                        this.color = Color.Red;
+                        adjust = 24;
+                    }
+                    
+                    if (this.pos.X - adjust <= Animation2d.pos.X + Animation2d.dims.X &&
+                    this.pos.X + this.dims.X >= Animation2d.pos.X &&
+                    this.pos.Y <= Animation2d.pos.Y + Animation2d.dims.Y / 4 &&
+                    this.pos.Y + this.dims.Y / 4 >= Animation2d.pos.Y)
+                    {
+                        overlap = true;
+                    }
+                    else
+                    {
+                        overlap = false;
+                    }
+                    
+                    
+                    if (overlap && isPunching && Animation2d.hasHealth)
+                    {
+                        Animation2d.color = Color.Red;
+                        Animation2d.health--;
+                        Debug.WriteLine("enemy health: " + health);
+                    }else
+                    {
+                        Animation2d.color = Color.White;
                     }
                 }
             }
@@ -184,7 +231,25 @@ namespace BEM.Source.Engine
         {
             if (texture != null)
             {
-                spriteBatch.Draw(texture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+               
+                if (isRight && !isLeft)
+                {
+                    if (isPunching)
+                    {
+                        Vector2 v = new Vector2(-20, 0);
+                        this.origin += v;
+                    }
+                    spriteBatch.Draw(texture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                }else if (isLeft && !isRight)
+                {
+                    if (isPunching)
+                    {
+                        Vector2 v = new Vector2(20, 0);
+                        this.origin += v;
+                    }
+
+                    spriteBatch.Draw(texture, pos + negOffset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                }
             }
                 
             else

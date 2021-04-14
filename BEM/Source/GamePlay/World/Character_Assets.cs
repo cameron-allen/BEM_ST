@@ -18,9 +18,11 @@ namespace BEM.Source.GamePlay.World
         public bool isWalking;
         float initPos;
 
-        public Character_Assets(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) : base(WALK, I, POS, DIMS, OFFSET, SHEETSIZE)
+        public Character_Assets(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) : base(WALK, I, POS, DIMS, OFFSET, SHEETSIZE, 0)
         {
             offset = OFFSET;
+            negOffset.X = -OFFSET.X;
+            negOffset.Y = OFFSET.Y;
             isJumping = false;
             setInterval(200);
         }
@@ -75,7 +77,8 @@ namespace BEM.Source.GamePlay.World
 
             if (Globals.keyState.IsKeyDown(Keys.A))     //if A key is pressed. go left and flip sprite if it isn't already flipped
             {
-
+                isLeft = true;
+                isRight = false;
                 if (pos.X > 30)
                 {
                     pos = new Vector2(pos.X - 2 * sprint, pos.Y);
@@ -97,6 +100,8 @@ namespace BEM.Source.GamePlay.World
             }
             if (Globals.keyState.IsKeyDown(Keys.D))     //if D key is pressed. go right and flip sprite if it isn't already flipped
             {
+                isLeft = false;
+                isRight = true;
 
                 if (pos.X < (Globals.screenWidth * 3) - 30)
                 {
@@ -121,7 +126,7 @@ namespace BEM.Source.GamePlay.World
             if (isPunching)
             {
                 setInterval(30);
-            }else
+            }else if (!Globals.keyState.IsKeyDown(Keys.LeftShift))
             {
                 setInterval(200);
             }

@@ -31,11 +31,9 @@ namespace BEM.Source.GamePlay.World
             }
             if (isPunching)
             {
-                //setInterval(5);
                 if (this.currFrame == 3 || this.currFrame == 7)
                 {
                     isPunching = false;
-                    //INTERVAL(75);
                 }
             }
             if (isPunching == false)
@@ -43,10 +41,7 @@ namespace BEM.Source.GamePlay.World
                 dims.X = 56;
                 this.texture = Globals.content.Load<Texture2D>(this.walk);
             }
-            if (instance == 1)
-            {
 
-            }
             base.Update(gameTime, entities);
         }
 
