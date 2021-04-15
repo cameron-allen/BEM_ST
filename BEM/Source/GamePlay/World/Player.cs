@@ -16,7 +16,7 @@ namespace BEM.Source.GamePlay.World
         public float punchTime;
         public Player(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE) : base(WALK, I, POS, DIMS, OFFSET, SHEETSIZE)
         {
-
+            isMain = true;
         }
 
         public override void Update(GameTime gameTime, List<Animation2d> entities) //updates sprite

@@ -25,6 +25,7 @@
     <None Remove="Content\bin\Windows\Content\Wall\torch.xnb" />
     <None Remove="Content\bin\Windows\Content\Wall\torch_idle.xnb" />
     <None Remove="Content\bin\Windows\Content\Wall\torch_light.xnb" />
+    <None Remove="Content\bin\Windows\Content\zamble.xnb" />
     <None Remove="Content\bin\Windows\cracked_floor.xnb" />
     <None Remove="Content\bin\Windows\rock_back.xnb" />
     <None Remove="Content\bin\Windows\torch.xnb" />
@@ -71,6 +72,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bin\Windows\Content\Wall\torch_light.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bin\Windows\Content\zamble.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

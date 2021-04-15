@@ -16,6 +16,7 @@ namespace BEM.Source.Engine
         int health;
         bool hasHealth;
         float coolDown;
+        public bool isMain;
 
         public Vector2 origin;
         public Vector2 velocity;
@@ -44,6 +45,8 @@ namespace BEM.Source.Engine
         {
             isLeft = false;
             isRight = true;
+            isMain = false;
+            isPunching = false;
             if (HEALTH > 0)
             {
                 this.hasHealth = true;
@@ -155,13 +158,13 @@ namespace BEM.Source.Engine
 
                     bool overlap;
                     int adjust = 0;
-                    if (this.isPunching && this.isLeft)
+                    if (this.isPunching)
                     {
                         adjust = 24;
                     }
                     
-                    if (this.pos.X - adjust <= Animation2d.pos.X + Animation2d.dims.X &&
-                    this.pos.X + this.dims.X >= Animation2d.pos.X &&
+                    if (this.pos.X <= Animation2d.pos.X + Animation2d.dims.X &&
+                    this.pos.X + this.dims.X + adjust >= Animation2d.pos.X &&
                     this.pos.Y <= Animation2d.pos.Y + Animation2d.dims.Y / 4 &&
                     this.pos.Y + this.dims.Y / 4 >= Animation2d.pos.Y)
                     {

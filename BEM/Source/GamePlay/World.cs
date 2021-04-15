@@ -12,7 +12,6 @@ namespace BEM.Source.Engine
 {
     public class World
     {
-        Character_Assets char_hitbox;
         Player player;
 
         private List<Animation2d> entities; //holds entities (Animation2d objects) that will collide
@@ -22,12 +21,11 @@ namespace BEM.Source.Engine
         public World()
         {
             //file location, screen loc, dims
-            player = new Player("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(56, 96), Vector2.Zero, 8); //main character
+            player = new Player("bin/Windows/Content/nerd_move", null, new Vector2(300, 300), new Vector2(56, 96), Vector2.Zero, 8); //main character //56, 96
             entities = new List<Animation2d>()
             {
-                new Animation2d("bin/Windows/Content/nerd_move", null, new Vector2(400, 150), new Vector2(56, 96), Vector2.Zero, 1, 3) {}, //test collision object
+                new Animation2d("bin/Windows/Content/zamble", null, new Vector2(400, 150), new Vector2(96, 128), Vector2.Zero, 1, 3) {}, //test collision object
             };
-            char_hitbox = new Character_Assets("bin/Windows/Content/char_hitbox", null, new Vector2(300, 300), new Vector2(64, 96), Vector2.Zero, 1);
             
             Globals._camera = new Camera2d();
             //Globals._camera.Transform.
@@ -41,8 +39,7 @@ namespace BEM.Source.Engine
             }
             player.Update(gameTime, entities);
            
-            char_hitbox.Update(gameTime, null);
-            Globals._camera.Pan(char_hitbox.pos, char_hitbox.dims);
+            Globals._camera.Pan(player.pos, player.dims);
         }
 
         public virtual void Draw()
@@ -53,8 +50,6 @@ namespace BEM.Source.Engine
                 Animation2d.Draw(Globals._spriteBatch);
             }
             player.Draw(Globals._spriteBatch);
-
-            //char_hitbox.Draw(Globals._spriteBatch);
         }
     }
 }
