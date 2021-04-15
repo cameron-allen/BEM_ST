@@ -9,7 +9,7 @@ using System.Text;
 namespace BEM.Source.Engine
 {
     public class Animation2d     //class from https://www.youtube.com/watch?v=orQO9O1ikkw
-    {
+    {                           //I worked on zombie sprite
         public Rectangle rectangle;
 
         Color color;
