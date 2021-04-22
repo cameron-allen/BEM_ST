@@ -2,6 +2,7 @@
 using BEM.Source.Engine;
 using BEM.Source.Engine.Background;
 using BEM.Source.Engine.Camera;
+using BEM.Source.GamePlay.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +20,9 @@ namespace BEM
 
         private Align_Basic2d wall;
         private Align_Basic2d floor;
+        private float timerEnd = 0f;
+        private SpriteFont font;
+        private bool reachEnd = false;
 
         Animation2d torch01;
         Animation2d torch02;
@@ -51,6 +55,8 @@ namespace BEM
         {
             Globals.content = this.Content;
             Globals._spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            font = Globals.content.Load<SpriteFont>("bin\\Windows\\Content\\Fonts\\Font");
 
             wall = new Align_Basic2d("bin/Windows/Content/Wall/rock_back", new Vector2(0, 130), new Vector2(64, 64), new Vector2(11, 3));
            
@@ -92,16 +98,16 @@ namespace BEM
 
             wall.Update(Vector2.Zero);
 
-            if (Camera2d.screenNum == 2) //if on the 2nd screen
-            {
-                floor.ChangePath("bin/Windows/Content/Floor/floor");
-            } else if (Camera2d.screenNum == 3) //if on the 3rd screen
-            {
-                floor.ChangePath("bin/Windows/Content/Floor/cracked_floor");
-            } else //if on any other screen
-            {
-                floor.ChangePath("bin/Windows/Content/Floor/large_tile_floor");
-            }
+            //if (Camera2d.screenNum == 2) //if on the 2nd screen
+            //{
+            //    floor.ChangePath("bin/Windows/Content/Floor/floor");
+            //} else if (Camera2d.screenNum == 3) //if on the 3rd screen
+            //{
+            //    floor.ChangePath("bin/Windows/Content/Floor/cracked_floor");
+            //} else //if on any other screen
+            //{
+            //    floor.ChangePath("bin/Windows/Content/Floor/large_tile_floor");
+            //}
             
             floor.Update(Vector2.Zero);
             
@@ -113,6 +119,16 @@ namespace BEM
 
 
             world.Update(gameTime);
+
+            if (Camera2d.screenNum == 4 || reachEnd || !Player.alive)
+            {
+                reachEnd = true;
+                timerEnd += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+            if (timerEnd > 2200)
+            {
+                Exit();
+            }
 
             base.Update(gameTime);
         }
@@ -128,6 +144,13 @@ namespace BEM
             torch02.Draw(Globals._spriteBatch);
             torch03.Draw(Globals._spriteBatch);
             torch_light.Draw();
+            if (timerEnd > 0 && Camera2d.screenNum == 4)
+            {
+                Globals._spriteBatch.DrawString(font, "You Win!!", new Vector2(200, 80), Color.DarkSeaGreen);
+            }else if (timerEnd > 0 && !Player.alive)
+            {
+                Globals._spriteBatch.DrawString(font, "Game Over", new Vector2(200, 80), Color.Crimson);
+            }
             Globals._spriteBatch.End();
 
             // TODO: Add your drawing code here

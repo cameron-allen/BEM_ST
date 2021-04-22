@@ -61,6 +61,13 @@
 /processorParam:TextureFormat=Color
 /build:Floor/large_tile_floor.png
 
+#begin Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.spritefont
+
 #begin images.jpg
 /importer:TextureImporter
 /processor:TextureProcessor

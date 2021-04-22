@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BEM.Source.GamePlay.World;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -12,28 +13,31 @@ namespace BEM.Source.Engine
     {                           //I worked on zombie sprite
         public Rectangle rectangle;
 
-        Color color;
-        int health;
-        bool hasHealth;
-        float coolDown;
-        public bool isMain;
+        public Color color;
+        protected int health;
+        public bool hasHealth;
+        public bool isAlive;
+        public float coolDown;
+        public int adjustHitbox = 0;
 
         public Vector2 origin;
-        public Vector2 velocity;
         public Vector2 dims;
         public Vector2 pos;
         public Texture2D texture;
         Texture2D idleTexture;
         public string walk;
-        public bool isPunching;
+        public bool isHitting;
         public Vector2 offset;
         public Vector2 negOffset;
+        public bool overlap;
+        public bool isPlayer = false;
+        public bool canMove;
 
         public bool isLeft;
         public bool isRight;
 
         public int currFrame; 
-        int sheetSize; //will use to set how many sprites are on the sheet
+        public int sheetSize; //will use to set how many sprites are on the sheet
         float timer;
         public int instance;
         public float interval; //interval between frames
@@ -43,14 +47,17 @@ namespace BEM.Source.Engine
 
         public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE, int HEALTH) //constructor
         {
+            isAlive = true;
+
             isLeft = false;
             isRight = true;
-            isMain = false;
-            isPunching = false;
+            isHitting = false;
+            canMove = true;
+            
             if (HEALTH > 0)
             {
-                this.hasHealth = true;
-                this.health = HEALTH;
+                health = HEALTH;
+                hasHealth = true;
             }else
             {
                 hasHealth = false;
@@ -90,104 +97,153 @@ namespace BEM.Source.Engine
         }
         public virtual void Update(GameTime gameTime, List<Animation2d> entities) //updates animation
         {
-            rectangle = new Rectangle(currFrame * (int)dims.X, 0, (int)dims.X, (int)dims.Y);
-            origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (!(sheetSize == 1) && texture != null)
+            if (isAlive)
             {
+                rectangle = new Rectangle(currFrame * (int)dims.X, 0, (int)dims.X, (int)dims.Y);
+                origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
+                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                if (prevLocX < pos.X)
+                if (!(sheetSize == 1) && texture != null)
                 {
-                    instance = 1;
-                    AnimateRight(gameTime);
 
-                }
-                else if (prevLocX > pos.X)
-                {
-                    instance = 2;
-                    AnimateLeft(gameTime);
-
-
-                }
-                else if (prevLocY != pos.Y && prevLocX == pos.X || isPunching) 
-                { 
-                    if (instance == 1)
+                    if (prevLocX < pos.X)
                     {
+                        instance = 1;
                         AnimateRight(gameTime);
-                    }else if (instance == 2)
+
+                    }
+                    else if (prevLocX > pos.X)
                     {
+                        instance = 2;
                         AnimateLeft(gameTime);
+
+
                     }
-                }
-                else
-                {
-                    if (idleTexture != null)
-                    {
-                        AnimateIdle(gameTime);
-                    }
-                    else
+                    else if (prevLocY != pos.Y && prevLocX == pos.X || isHitting)
                     {
                         if (instance == 1)
                         {
-                            currFrame = 0;
+                            AnimateRight(gameTime);
                         }
-                        else
+                        else if (instance == 2)
                         {
-                            currFrame = sheetSize / 2;
+                            AnimateLeft(gameTime);
                         }
-                    }
-
-                }
-                prevLocY = pos.Y;
-                prevLocX = pos.X;
-
-            }else if (!(sheetSize == 1) && idleTexture != null)
-            {
-                AnimateIdle(gameTime);
-            }
-
-            if (entities != null)       //checks if Animation2ds are touching
-            {
-                foreach (var Animation2d in entities)
-                {
-                    
-                    if (Animation2d == this)
-                        continue;
-
-
-                    bool overlap;
-                    int adjust = 0;
-                    if (this.isPunching)
-                    {
-                        adjust = 24;
-                    }
-                    
-                    if (this.pos.X <= Animation2d.pos.X + Animation2d.dims.X &&
-                    this.pos.X + this.dims.X + adjust >= Animation2d.pos.X &&
-                    this.pos.Y <= Animation2d.pos.Y + Animation2d.dims.Y / 4 &&
-                    this.pos.Y + this.dims.Y / 4 >= Animation2d.pos.Y)
-                    {
-                        overlap = true;
                     }
                     else
                     {
-                        overlap = false;
+                        if (idleTexture != null)
+                        {
+                            AnimateIdle(gameTime);
+                        }
+                        else
+                        {
+                            if (instance == 1)
+                            {
+                                currFrame = 0;
+                            }
+                            else
+                            {
+                                currFrame = sheetSize / 2;
+                            }
+                        }
+
                     }
-                    
-                    
-                    if (overlap && isPunching && Animation2d.hasHealth)
+                    prevLocY = pos.Y;
+                    prevLocX = pos.X;
+
+                }
+                else if (!(sheetSize == 1) && idleTexture != null)
+                {
+                    AnimateIdle(gameTime);
+                }
+
+                if (entities != null)       //checks if Animation2ds are touching
+                {
+                    coolDown += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    foreach (var entity in entities)
                     {
-                        Animation2d.color = Color.Red;
-                        Animation2d.health--;
-                        Debug.WriteLine("enemy health: " + health);
-                    }else
-                    {
-                        Animation2d.color = Color.White;
+
+                        if (entity == this)
+                            continue;
+
+                        if (this.isPlayer && !entity.isPlayer && this.isAlive)
+                        {
+                            if (this.pos.X - adjustHitbox <= entity.pos.X + entity.dims.X &&
+                            this.pos.X + dims.X + adjustHitbox >= entity.pos.X &&
+                            this.pos.Y <= entity.pos.Y + entity.dims.Y / 4 &&
+                            this.pos.Y + this.dims.Y / 4 >= entity.pos.Y)
+                            {
+                                overlap = true;
+                            }
+                            else
+                            {
+                                overlap = false;
+                            }
+
+
+                            if (overlap && isHitting && entity.hasHealth && coolDown > 500 && entity.health != 0)
+                            {
+                                entity.color = Color.Red;
+                                entity.canMove = false;
+                                entity.health--;
+                                Debug.WriteLine("enemy health: " + entity.health);
+                                coolDown = 0;
+                            }
+                            else if (coolDown > 200)
+                            {
+                                entity.color = Color.White;
+                                entity.canMove = true;
+                            }
+                            if (entity.health == 0 && entity.color != Color.Red)
+                            {
+                                entity.isAlive = false;
+                                this.color = Color.White;
+
+                            }
+                        }
+                        else if (!this.isPlayer && entity.isPlayer && entity.isAlive) {
+
+                            if (this.pos.X - adjustHitbox <= entity.pos.X + entity.dims.X &&
+                            this.pos.X + this.dims.X >= entity.pos.X &&
+                            this.pos.Y <= entity.pos.Y + entity.dims.Y / 4 &&
+                            this.pos.Y + this.dims.Y / 4 >= entity.pos.Y)
+                            {
+                                overlap = true;
+                            }
+                            else
+                            {
+                                overlap = false;
+                            }
+                            if (overlap && !entity.isHitting)
+                            {
+                                entity.color = Color.Red;
+                            }
+                            if (overlap && !entity.isHitting && coolDown > 800 && entity.health != 0)
+                            {
+                                entity.health--;
+                                Debug.WriteLine("player health: " + entity.health);
+                                coolDown = 0;
+                                canMove = false;
+                            }
+                            else if (coolDown > 200)
+                            {
+                                entity.color = Color.White;
+                                if (coolDown > 300)
+                                {
+                                    canMove = true;
+                                }
+                                
+                            }
+                            if (entity.health == 0 && entity.color != Color.Red)
+                            { 
+                                entity.isAlive = false;
+                                this.color = Color.White;
+                            }
+                        }
                     }
                 }
             }
-           
         }
 
         public void AnimateRight(GameTime gameTime) //goes through animation for going right
@@ -232,32 +288,36 @@ namespace BEM.Source.Engine
 
         public virtual void Draw(SpriteBatch spriteBatch) //draws sprite
         {
-            if (texture != null)
+            if (isAlive)
             {
-               
-                if (isRight && !isLeft)
+                if (texture != null)
                 {
-                    if (isPunching)
-                    {
-                        Vector2 v = new Vector2(-20, 0);
-                        this.origin += v;
-                    }
-                    spriteBatch.Draw(texture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
-                }else if (isLeft && !isRight)
-                {
-                    if (isPunching)
-                    {
-                        Vector2 v = new Vector2(20, 0);
-                        this.origin += v;
-                    }
 
-                    spriteBatch.Draw(texture, pos + negOffset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                    if (isRight && !isLeft)
+                    {
+                        if (isHitting)
+                        {
+                            Vector2 v = new Vector2(-20, 0);
+                            this.origin += v;
+                        }
+                        spriteBatch.Draw(texture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                    }
+                    else if (isLeft && !isRight)
+                    {
+                        if (isHitting)
+                        {
+                            Vector2 v = new Vector2(20, 0);
+                            this.origin += v;
+                        }
+
+                        spriteBatch.Draw(texture, pos + negOffset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                    }
                 }
-            }
-                
-            else
-            {
-                spriteBatch.Draw(idleTexture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+
+                else
+                {
+                    spriteBatch.Draw(idleTexture, pos + offset, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);
+                }
             }
         }
     }

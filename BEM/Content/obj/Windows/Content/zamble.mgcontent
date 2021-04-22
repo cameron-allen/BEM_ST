@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/zamble.png</SourceFile>
-  <SourceTime>2021-04-15T13:57:47.2324295-05:00</SourceTime>
+  <SourceTime>2021-04-20T13:56:06.6120988-05:00</SourceTime>
   <DestFile>C:/Users/camer/Desktop/stuff/Game Projects/BEM/BEM/Content/bin/Windows/Content/zamble.xnb</DestFile>
-  <DestTime>2021-04-15T13:59:47.9973383-05:00</DestTime>
+  <DestTime>2021-04-21T15:16:41.3547556-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T18:17:54-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
