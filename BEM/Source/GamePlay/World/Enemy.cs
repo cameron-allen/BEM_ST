@@ -33,10 +33,10 @@ namespace BEM.Source.GamePlay.World
             {
                 if (isLeft)
                 {
-                    currFrame = 8;
+                    currFrame = 0;
                 }else
                 {
-                    currFrame = 0;
+                    currFrame = 8;
                 }
                 color = Color.White;
                 canMove = false;
