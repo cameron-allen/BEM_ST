@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:beating_heart.png
 
+#begin Buttons/Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/Button.png
+
 #begin char_hitbox.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -151,6 +163,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:nerd_punch_hitbox.png
+
+#begin small_Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:small_Font.spritefont
 
 #begin Wall/rock_back.png
 /importer:TextureImporter

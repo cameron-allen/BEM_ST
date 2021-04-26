@@ -82,17 +82,17 @@ namespace BEM.Source.Engine
             sheetSize = SHEETSIZE;
             color = Color.White;
         }
-        public void setHealth(int HEALTH)
+        public void setHealth(int HEALTH) //sets health points
         {
             this.health = HEALTH;
             hasHealth = true;
         }
-        public void setInterval(int INTERVAL)
+        public void setInterval(int INTERVAL) //sets animation speed
         {
             interval = INTERVAL;
         }
 
-        public void setPos(Vector2 POS)
+        public void setPos(Vector2 POS) //sets position
         {
             pos = POS;
         }
@@ -171,7 +171,7 @@ namespace BEM.Source.Engine
                         if (entity == this)
                             continue;
 
-                        if (this.isPlayer && !entity.isPlayer && this.isAlive)
+                        if (this.isPlayer && !entity.isPlayer && this.isAlive) //if this object is the player and the entity isn't a player
                         {
                             if (this.pos.X - adjustHitbox <= entity.pos.X + entity.dims.X &&
                             this.pos.X + dims.X + adjustHitbox >= entity.pos.X &&
@@ -220,7 +220,7 @@ namespace BEM.Source.Engine
                                 isHit = true;
                             }
                         }
-                        else if (!this.isPlayer && entity.isPlayer && entity.isAlive) {
+                        else if (!this.isPlayer && entity.isPlayer && entity.isAlive) { //if this object isn't a player and the entity is a player
 
                             if (this.pos.X - adjustHitbox <= entity.pos.X + entity.dims.X &&
                             this.pos.X + this.dims.X >= entity.pos.X &&
@@ -254,7 +254,7 @@ namespace BEM.Source.Engine
                                 entity.isAlive = false;
                             }
 
-                        }else if (!this.isPlayer && !entity.isPlayer && this.isAlive && entity.isAlive)
+                        }else if (!this.isPlayer && !entity.isPlayer && this.isAlive && entity.isAlive) //if both the object and the entity are not players
                         {
                             if (this.pos.X <= entity.pos.X + entity.dims.X &&
                             this.pos.X + this.dims.X >= entity.pos.X &&

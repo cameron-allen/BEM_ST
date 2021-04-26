@@ -1,5 +1,6 @@
 ﻿using BEM.Source.Engine;
 using BEM.Source.Engine.Camera;
+using BEM.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -41,7 +42,7 @@ namespace BEM.Source.GamePlay.World
                 canMove = false;
             }
 
-            if ((pos != Player.playerPos && isAlive && screenLoc == Camera2d.screenNum && this.canMove && Player.alive) || (float)gameTime.ElapsedGameTime.TotalMilliseconds == 0)
+            if ((pos != Player.playerPos && isAlive && screenLoc == Camera2d.screenNum && this.canMove && Player.alive) || GameState.start == 0)
             {
                 if (pos.X > Player.playerPos.X)
                 {

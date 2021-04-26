@@ -18,8 +18,6 @@ namespace BEM.Source.Engine
         private List<Animation2d> players = new List<Animation2d>();
         private List<Animation2d> enemies; //holds enemies (Animation2d objects) that will collide
 
-
-
         public World()
         {
             //file location, screen loc, dims
