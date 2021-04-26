@@ -27,6 +27,7 @@ namespace BEM.Source.Engine
         Texture2D idleTexture;
         public string walk;
         public bool isHitting;
+        public bool isHit;
         public Vector2 offset;
         public Vector2 negOffset;
         public bool overlap;
@@ -48,7 +49,7 @@ namespace BEM.Source.Engine
         public Animation2d(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE, int HEALTH) //constructor
         {
             isAlive = true;
-
+            isHit = false;
             isLeft = false;
             isRight = true;
             isHitting = false;
@@ -104,7 +105,7 @@ namespace BEM.Source.Engine
                 origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
                 timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                if (!(sheetSize == 1) && texture != null)
+                if (!(sheetSize == 1) && texture != null && canMove)
                 {
 
                     if (prevLocX < pos.X)
@@ -159,9 +160,11 @@ namespace BEM.Source.Engine
                     AnimateIdle(gameTime);
                 }
 
+                isHit = false;
                 if (entities != null)       //checks if Animation2ds are touching
                 {
                     coolDown += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    bool hit = false;
                     foreach (var entity in entities)
                     {
 
@@ -200,7 +203,21 @@ namespace BEM.Source.Engine
                             {
                                 entity.isAlive = false;
                                 this.color = Color.White;
+                                isHit = false;
+                            }
 
+
+                            if (!isHitting && overlap && entity.isAlive)
+                            {
+                                color = Color.Red;
+                            }
+                            else
+                            {
+                                color = Color.White;
+                            }
+                            if (color == Color.Red && isHit != true)
+                            {
+                                isHit = true;
                             }
                         }
                         else if (!this.isPlayer && entity.isPlayer && entity.isAlive) {
@@ -216,32 +233,55 @@ namespace BEM.Source.Engine
                             {
                                 overlap = false;
                             }
-                            if (overlap && !entity.isHitting)
-                            {
-                                entity.color = Color.Red;
-                            }
                             if (overlap && !entity.isHitting && coolDown > 800 && entity.health != 0)
                             {
-                                entity.health--;
+                                entity.color = Color.Red;
+                                if (!hit)
+                                {
+                                    entity.health--;
+                                    hit = true;
+                                }
                                 Debug.WriteLine("player health: " + entity.health);
                                 coolDown = 0;
-                                canMove = false;
                             }
-                            else if (coolDown > 200)
+                            else if (coolDown > 400)
                             {
                                 entity.color = Color.White;
-                                if (coolDown > 300)
-                                {
-                                    canMove = true;
-                                }
                                 
                             }
-                            if (entity.health == 0 && entity.color != Color.Red)
-                            { 
+                            if (entity.health == 0 && entity.color != Color.Red && entity.isAlive)
+                            {
                                 entity.isAlive = false;
-                                this.color = Color.White;
+                            }
+
+                        }else if (!this.isPlayer && !entity.isPlayer && this.isAlive && entity.isAlive)
+                        {
+                            if (this.pos.X <= entity.pos.X + entity.dims.X &&
+                            this.pos.X + this.dims.X >= entity.pos.X &&
+                            this.pos.Y <= entity.pos.Y + entity.dims.Y / 4 && 
+                            this.pos.Y + this.dims.Y / 4 >= entity.pos.Y)
+                            {
+                                overlap = true;
+                            }
+                            else
+                            {
+                                overlap = false;
+                            }
+                            if (overlap && (pos.Y > entity.pos.Y) && (pos.Y + 20 > Player.playerPos.Y))
+                            {
+                                pos.Y += 1f;
+                            }else if (overlap && (pos.Y < entity.pos.Y) && (pos.Y + 20 < Player.playerPos.Y))
+                            {
+                                pos.Y -= 1f;
                             }
                         }
+                    }
+                }
+                if (isPlayer)
+                {
+                    if (isHit)
+                    {
+                        color = Color.Red;
                     }
                 }
             }

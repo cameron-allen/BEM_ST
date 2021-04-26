@@ -28,7 +28,20 @@ namespace BEM.Source.GamePlay.World
             base.Update(gameTime, entities);
             pos += velocity;
 
-            if ((pos != Player.playerPos && isAlive && screenLoc == Camera2d.screenNum && this.canMove && !Player.alive) || (float)gameTime.ElapsedGameTime.TotalMilliseconds == 0)
+            if (!Player.alive)
+            {
+                if (isLeft)
+                {
+                    currFrame = 8;
+                }else
+                {
+                    currFrame = 0;
+                }
+                color = Color.White;
+                canMove = false;
+            }
+
+            if ((pos != Player.playerPos && isAlive && screenLoc == Camera2d.screenNum && this.canMove && Player.alive) || (float)gameTime.ElapsedGameTime.TotalMilliseconds == 0)
             {
                 if (pos.X > Player.playerPos.X)
                 {
@@ -54,6 +67,7 @@ namespace BEM.Source.GamePlay.World
             {
                 velocity = Vector2.Zero;
             }
+
         }
 
         private void checkLock()
