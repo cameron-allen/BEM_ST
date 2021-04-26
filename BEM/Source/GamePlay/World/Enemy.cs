@@ -28,7 +28,7 @@ namespace BEM.Source.GamePlay.World
             base.Update(gameTime, entities);
             pos += velocity;
 
-            if ((pos != Player.playerPos && isAlive && screenLoc == Player.screenLoc && this.canMove && Player.alive) || (float)gameTime.ElapsedGameTime.TotalMilliseconds == 0)
+            if ((pos != Player.playerPos && isAlive && screenLoc == Camera2d.screenNum && this.canMove && !Player.alive) || (float)gameTime.ElapsedGameTime.TotalMilliseconds == 0)
             {
                 if (pos.X > Player.playerPos.X)
                 {

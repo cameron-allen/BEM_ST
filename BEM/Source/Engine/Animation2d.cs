@@ -95,6 +95,7 @@ namespace BEM.Source.Engine
         {
             pos = POS;
         }
+
         public virtual void Update(GameTime gameTime, List<Animation2d> entities) //updates animation
         {
             if (isAlive)
@@ -292,7 +293,6 @@ namespace BEM.Source.Engine
             {
                 if (texture != null)
                 {
-
                     if (isRight && !isLeft)
                     {
                         if (isHitting)

@@ -15,15 +15,14 @@ namespace BEM.Source.GamePlay.World
 
         public float punchTime;
         public static Vector2 playerPos;
-        public static int screenLoc = 0;
         public static bool hitting;
         public static bool alive;
+        public static int hPoints;
         public Player(string WALK, string I, Vector2 POS, Vector2 DIMS, Vector2 OFFSET, int SHEETSIZE, int HEALTH) : base(WALK, I, POS, DIMS, OFFSET, SHEETSIZE, HEALTH)
         {
             //health = HEALTH;
             isAlive = true;
             isPlayer = true;
-            checkLock();
 
         }
 
@@ -53,25 +52,14 @@ namespace BEM.Source.GamePlay.World
                     dims.X = 56;
                     this.texture = Globals.content.Load<Texture2D>(this.walk);
                 }
-                checkLock();
+
                 hitting = isHitting;
                 playerPos = pos;
-                base.Update(gameTime, entities);
+                hPoints = health;
+                //base.Update(gameTime, entities);
             }
+            base.Update(gameTime, entities);
             alive = isAlive;
-        }
-        private void checkLock()
-        {
-            int tempWidth = Globals.screenWidth;
-            for (int i = 1; i <= Camera2d.screenNum; i++)
-            {
-                if (pos.X < tempWidth)
-                {
-                    screenLoc = i;
-                    break;
-                }
-                tempWidth += Globals.screenWidth;
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch) //draws sprite on screen

@@ -34,7 +34,7 @@ namespace BEM.Source.Engine
                 new Enemy("bin/Windows/Content/zamble", null, new Vector2(distance + 60 + Globals.screenWidth * 2, 225), new Vector2(96, 128), Vector2.Zero, 16, 3) {}, //test collision object
             };
 
-            player = new Player("bin/Windows/Content/nerd_move", null, new Vector2(100, 200), new Vector2(56, 96), Vector2.Zero, 8, 3); //main character //56, 96
+            player = new Player("bin/Windows/Content/nerd_move", null, new Vector2(100, 200), new Vector2(56, 96), Vector2.Zero, 8, 5); //main character //56, 96
 
             enemies.Add(player);
             

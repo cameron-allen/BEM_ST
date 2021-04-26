@@ -11,10 +11,12 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\bin\Windows\Content\beating_heart.xnb" />
     <None Remove="Content\bin\Windows\Content\char_hitbox.xnb" />
     <None Remove="Content\bin\Windows\Content\Floor\cracked_floor.xnb" />
     <None Remove="Content\bin\Windows\Content\Floor\floor.xnb" />
     <None Remove="Content\bin\Windows\Content\Floor\large_tile_floor.xnb" />
+    <None Remove="Content\bin\Windows\Content\Font.xnb" />
     <None Remove="Content\bin\Windows\Content\Fonts\Font.xnb" />
     <None Remove="Content\bin\Windows\Content\images.xnb" />
     <None Remove="Content\bin\Windows\Content\nerd.xnb" />
@@ -33,6 +35,9 @@
     <None Remove="Content\bin\Windows\torch_light.xnb" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bin\Windows\Content\beating_heart.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\bin\Windows\Content\char_hitbox.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -28,6 +28,12 @@ namespace BEM
         Animation2d torch02;
         Animation2d torch03;
 
+        Animation2d heart1;
+        Animation2d heart2;
+        Animation2d heart3;
+        Animation2d heart4;
+        Animation2d heart5;
+
         public Align_Basic2d torch_light;
 
         public Game1()
@@ -67,6 +73,17 @@ namespace BEM
             torch03 = new Animation2d(null, "bin/Windows/Content/Wall/torch_idle", new Vector2(534, 50), new Vector2(128, 128), Vector2.Zero, 3, 0);
             torch03.setInterval(150);
 
+            heart1 = new Animation2d(null, "bin/Windows/Content/beating_heart", new Vector2(15, 20), new Vector2(21, 21), Vector2.Zero, 7, 0);
+            heart1.setInterval(100);
+            heart2 = new Animation2d(null, "bin/Windows/Content/beating_heart", new Vector2(15, 45), new Vector2(21, 21), Vector2.Zero, 7, 0);
+            heart2.setInterval(100);
+            heart3 = new Animation2d(null, "bin/Windows/Content/beating_heart", new Vector2(15, 70), new Vector2(21, 21), Vector2.Zero, 7, 0);
+            heart3.setInterval(100);
+            heart4 = new Animation2d(null, "bin/Windows/Content/beating_heart", new Vector2(15, 95), new Vector2(21, 21), Vector2.Zero, 7, 0);
+            heart4.setInterval(100);
+            heart5 = new Animation2d(null, "bin/Windows/Content/beating_heart", new Vector2(15, 120), new Vector2(21, 21), Vector2.Zero, 7, 0);
+            heart5.setInterval(100);
+
             //torch = new Align_Animation2d(t, new Vector2(107, 50), new Vector2(128, 128), new Vector2(3, 1), );
             torch_light = new Align_Basic2d("bin/Windows/Content/Wall/torch_light", new Vector2(107, 50), new Vector2(128, 128), new Vector2(3, 1));
             floor = new Align_Basic2d("bin/Windows/Content/Floor/large_tile_floor", new Vector2(0, 386), new Vector2(64, 64), new Vector2(11, 4));
@@ -97,17 +114,6 @@ namespace BEM
             Globals.keyState = Keyboard.GetState();
 
             wall.Update(Vector2.Zero);
-
-            //if (Camera2d.screenNum == 2) //if on the 2nd screen
-            //{
-            //    floor.ChangePath("bin/Windows/Content/Floor/floor");
-            //} else if (Camera2d.screenNum == 3) //if on the 3rd screen
-            //{
-            //    floor.ChangePath("bin/Windows/Content/Floor/cracked_floor");
-            //} else //if on any other screen
-            //{
-            //    floor.ChangePath("bin/Windows/Content/Floor/large_tile_floor");
-            //}
             
             floor.Update(Vector2.Zero);
             
@@ -117,6 +123,11 @@ namespace BEM
             torch02.Update(gameTime, null);
             torch03.Update(gameTime, null);
 
+            heart1.Update(gameTime, null);
+            heart2.Update(gameTime, null);
+            heart3.Update(gameTime, null);
+            heart4.Update(gameTime, null);
+            heart5.Update(gameTime, null);
 
             world.Update(gameTime);
 
@@ -125,7 +136,7 @@ namespace BEM
                 reachEnd = true;
                 timerEnd += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
-            if (timerEnd > 2200)
+            if (timerEnd > 2600)
             {
                 Exit();
             }
@@ -143,20 +154,48 @@ namespace BEM
             torch01.Draw(Globals._spriteBatch);
             torch02.Draw(Globals._spriteBatch);
             torch03.Draw(Globals._spriteBatch);
-            torch_light.Draw();
-            if (timerEnd > 0 && Camera2d.screenNum == 4)
-            {
-                Globals._spriteBatch.DrawString(font, "You Win!!", new Vector2(200, 80), Color.DarkSeaGreen);
-            }else if (timerEnd > 0 && !Player.alive)
-            {
-                Globals._spriteBatch.DrawString(font, "Game Over", new Vector2(200, 80), Color.Crimson);
-            }
+
             Globals._spriteBatch.End();
 
             // TODO: Add your drawing code here
             Globals._spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: Globals._camera.Transform); //transformMatrix: Globals._camera.Transform    SpriteSortMode.Deferred, BlendState.AlphaBlend
 
             world.Draw();
+
+            Globals._spriteBatch.End();
+
+            Globals._spriteBatch.Begin();
+            if (Player.alive)
+            {
+                heart1.Draw(Globals._spriteBatch);
+            }
+            if (Player.hPoints >= 2)
+            {
+                heart2.Draw(Globals._spriteBatch);
+            }
+            if (Player.hPoints >= 3)
+            {
+                heart3.Draw(Globals._spriteBatch);
+            }
+            if (Player.hPoints >= 4)
+            {
+                heart4.Draw(Globals._spriteBatch);
+            }
+            if (Player.hPoints >= 5)
+            {
+                heart5.Draw(Globals._spriteBatch);
+            }
+
+            torch_light.Draw();
+
+            if (timerEnd > 0 && Camera2d.screenNum == 4)
+            {
+                Globals._spriteBatch.DrawString(font, "You Win!!", new Vector2(200, 80), Color.DarkSeaGreen);
+            }
+            else if (timerEnd > 0 && !Player.alive)
+            {
+                Globals._spriteBatch.DrawString(font, "Game Over", new Vector2(200, 80), Color.Crimson);
+            }
 
             Globals._spriteBatch.End();
 
